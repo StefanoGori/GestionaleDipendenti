@@ -8,9 +8,8 @@ import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name="hours")
@@ -19,6 +18,9 @@ public class Hours {
 	@Id
 	@Column(name="ID",nullable = false, length=100, unique = true)
 	private String 	ID;
+
+	@OneToOne(mappedBy = "Hours")
+	private Attendance Attendance;
 	
 	@Column(name="Entrance")
 	private LocalTime Entrance;
@@ -62,4 +64,12 @@ public class Hours {
 	public void setDay(LocalDate day) {
 		Day = day;
 	}
+
+	public Attendance getAttendance() {
+        return Attendance;
+    }
+
+    public void setAttendance(Attendance attendance) {
+        this.Attendance = attendance;
+    }
 }

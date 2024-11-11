@@ -3,6 +3,7 @@ package com.gestionale.entities;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,6 +15,9 @@ public class User {
 	@Id
 	@Column(name="CF", nullable=false, length = 16, unique=true)
 	private String CF;
+
+	@OneToOne(mappedBy = "User")
+	private Attendance Attendance;
 	
 	//campo nome not nullable
 	@Column(name="name", nullable=false)
@@ -104,6 +108,14 @@ public class User {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
+
+	public Attendance getAttendance() {
+        return Attendance;
+    }
+
+    public void setAttendance(Attendance attendance) {
+        this.Attendance = attendance;
+    }
 	
 	
 

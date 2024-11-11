@@ -8,58 +8,60 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gestionale.entities.User;
-import com.gestionale.services.UserService;
+import com.gestionale.services.HoursService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.gestionale.entities.Hours;
 
 
 
 @RestController
 
-@RequestMapping("/user")
-public class UserController {
-
+@RequestMapping("/hours")
+public class HoursController {
+    
     @Autowired
-    private UserService us;
+    private HoursService Hs;
 
     @GetMapping(value = "/test", produces = "application/json")
     public ResponseEntity<String> test() {
-        return new ResponseEntity<>("Users controller works", HttpStatus.OK);
+        return new ResponseEntity<>("Hours controller works", HttpStatus.OK);
     }
 
     @GetMapping(value = "/all", produces = "application/json")
-    public ResponseEntity<List<User>> allUsers(){
-        List<User> u= (List<User>) us.findAll();
-        return new ResponseEntity<List<User>>(u, HttpStatus.OK);
+    public ResponseEntity<List<Hours>> allHours(){
+        List<Hours> h= (List<Hours>) Hs.findAll();
+        return new ResponseEntity<List<Hours>>(h, HttpStatus.OK);
     }
 
     @GetMapping(value = "/add", produces = "application/json")
-    public ResponseEntity<String> addUser(@RequestBody User u){
+    public ResponseEntity<String> addHours(@RequestBody Hours h){
         try {
-            return new ResponseEntity<String>(us.addUser(u), HttpStatus.OK);
+            return new ResponseEntity<String>(Hs.addHours(h), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }   
     }
 
     @GetMapping(value = "/delete", produces = "application/json")
-    public ResponseEntity<String> deleteUser(@RequestParam String cf){
+    public ResponseEntity<String> deleteHours(@RequestParam String id){
         try {
-            return new ResponseEntity<String>(us.deleteUser(cf), HttpStatus.OK);
+            return new ResponseEntity<String>(Hs.deleteHours(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping(value = "/update")
-    public ResponseEntity<?> updateUser(@RequestBody User u){
+    public ResponseEntity<?> updateHours(@RequestBody Hours h){
         try {
-            return new ResponseEntity<String>(us.updateUser(u), HttpStatus.OK);
+            return new ResponseEntity<String>(Hs.updateHours(h), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
     
+
 }

@@ -37,6 +37,7 @@ public class User {
 	@Column(name="Permissions")
 	private int permission;
 
+		// creazione get e setter
 	public String getCF() {
 		return CF;
 	}
@@ -94,7 +95,7 @@ public class User {
 	}
 	
 	
-	// creazione get e setter
+
 	
 	
 	

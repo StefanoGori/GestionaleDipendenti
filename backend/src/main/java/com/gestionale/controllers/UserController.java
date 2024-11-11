@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gestionale.entities.User;
 import com.gestionale.services.UserService;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -35,7 +39,7 @@ public class UserController {
         return new ResponseEntity<List<User>>(u, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/add", produces = "application/json")
+    @PostMapping(value = "/add", produces = "application/json")
     public ResponseEntity<String> addUser(@RequestBody User u){
         try {
             return new ResponseEntity<String>(us.addUser(u), HttpStatus.OK);
@@ -44,7 +48,7 @@ public class UserController {
         }   
     }
 
-    @GetMapping(value = "/delete", produces = "application/json")
+    @DeleteMapping(value = "/delete", produces = "application/json")
     public ResponseEntity<String> deleteUser(@RequestParam String cf){
         try {
             return new ResponseEntity<String>(us.deleteUser(cf), HttpStatus.OK);
@@ -53,7 +57,7 @@ public class UserController {
         }
     }
 
-    @GetMapping(value = "/update")
+    @PutMapping(value = "/update")
     public ResponseEntity<?> updateUser(@RequestBody User u){
         try {
             return new ResponseEntity<String>(us.updateUser(u), HttpStatus.OK);

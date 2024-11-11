@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gestionale.services.HoursService;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -36,7 +40,7 @@ public class HoursController {
         return new ResponseEntity<List<Hours>>(h, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/add", produces = "application/json")
+    @PostMapping(value = "/add", produces = "application/json")
     public ResponseEntity<String> addHours(@RequestBody Hours h){
         try {
             return new ResponseEntity<String>(Hs.addHours(h), HttpStatus.OK);
@@ -45,7 +49,7 @@ public class HoursController {
         }   
     }
 
-    @GetMapping(value = "/delete", produces = "application/json")
+    @DeleteMapping(value = "/delete", produces = "application/json")
     public ResponseEntity<String> deleteHours(@RequestParam String id){
         try {
             return new ResponseEntity<String>(Hs.deleteHours(id), HttpStatus.OK);
@@ -54,7 +58,7 @@ public class HoursController {
         }
     }
 
-    @GetMapping(value = "/update")
+    @PutMapping(value = "/update")
     public ResponseEntity<?> updateHours(@RequestBody Hours h){
         try {
             return new ResponseEntity<String>(Hs.updateHours(h), HttpStatus.OK);

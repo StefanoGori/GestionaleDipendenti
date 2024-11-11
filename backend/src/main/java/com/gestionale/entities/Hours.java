@@ -1,12 +1,16 @@
 package com.gestionale.entities;
 
-import java.sql.Time;
-import java.sql.Date;
+import java.time.LocalTime;
+
+
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name="hours")
@@ -16,14 +20,14 @@ public class Hours {
 	@Column(name="ID",nullable = false, length=100, unique = true)
 	private String 	ID;
 	
-	@Column(name="Entrance", nullable=false)
-	private Time Entrance;
+	@Column(name="Entrance")
+	private LocalTime Entrance;
 	
-	@Column(name="Exit", nullable=false)
-	private Time Exit;
+	@Column(name="Leaving")
+	private LocalTime Leaving;
 	
-	@Column (name="Date", nullable=false)
-	private Date Date;
+	@Column(name="day", nullable = false)
+	private LocalDate Day;
 
 // ------------------------------------GETTER AND SETTER------------------------------------
 
@@ -35,27 +39,27 @@ public class Hours {
 		ID = iD;
 	}
 
-	public Time getEntrance() {
+	public LocalTime getEntrance() {
 		return Entrance;
 	}
 
-	public void setEntrance(Time entrance) {
-		Entrance = entrance;
+	public void setEntrance(LocalTime entrance) {
+		Entrance = entrance != null ? entrance : LocalTime.of(9, 0);
 	}
 
-	public Time getExit() {
-		return Exit;
+	public LocalTime getLeaving() {
+		return Leaving;
 	}
 
-	public void setExit(Time exit) {
-		Exit = exit;
+	public void setLeaving(LocalTime leaving) {
+		Leaving = leaving != null ? leaving : LocalTime.of(18, 0);
 	}
 
-	public Date getDate() {
-		return Date;
+	public LocalDate getDay() {
+		return Day;
 	}
 
-	public void setDate(Date date) {
-		Date = date;
+	public void setDay(LocalDate day) {
+		Day = day;
 	}
 }

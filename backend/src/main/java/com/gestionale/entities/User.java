@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="Users")
+@Table(name="users")
 public class User {
 	
 	
@@ -16,15 +16,15 @@ public class User {
 	private String CF;
 	
 	//campo nome not nullable
-	@Column(name="Name", nullable=false)
+	@Column(name="name", nullable=false)
 	private String name;
 	
 	//campo cognome not nullable
-	@Column(name="Surname", nullable=false)
+	@Column(name="surname", nullable=false)
 	private String surname;
 	
 	//campo email not nullable e unico
-	@Column(name="Email", nullable=false, unique=true)
+	@Column(name="email", nullable=false, unique=true)
 	private String email;
 	
 	//campo admin default false
@@ -37,7 +37,7 @@ public class User {
 	@Column(name="Permissions")
 	private int permission;
 
-	@Column (name="Pwd")
+	@Column (name="pwd")
 	private String pwd;
 
 		// creazione get e setter

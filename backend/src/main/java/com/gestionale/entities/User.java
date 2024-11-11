@@ -9,21 +9,97 @@ import jakarta.persistence.Table;
 @Table(name="Users")
 public class User {
 	
+	
+	// creazione della chiave primaria CF con lunghezza 16, unica e not nullable
 	@Id
 	@Column(name="CF", nullable=false, length = 16, unique=true)
 	private String CF;
 	
+	//campo nome not nullable
 	@Column(name="Name", nullable=false)
 	private String name;
 	
+	//campo cognome not nullable
 	@Column(name="Surname", nullable=false)
 	private String surname;
 	
+	//campo email not nullable e unico
 	@Column(name="Email", nullable=false, unique=true)
 	private String email;
 	
-	@Column(name="Admin")
-	private Boolean Admin;
+	//campo admin default false
+	@Column(name="Admin",  columnDefinition = "boolean default false")
+	private Boolean admin;
+	
+	@Column(name="Holidays")
+	private int holidays;
+	
+	@Column(name="Permissions")
+	private int permission;
+
+	public String getCF() {
+		return CF;
+	}
+
+	public void setCF(String cF) {
+		CF = cF;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Boolean getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
+	}
+
+	public int getHolidays() {
+		return holidays;
+	}
+
+	public void setHolidays(int holidays) {
+		this.holidays = holidays;
+	}
+
+	public int getPermission() {
+		return permission;
+	}
+
+	public void setPermission(int permission) {
+		this.permission = permission;
+	}
+	
+	
+	// creazione get e setter
+	
+	
+	
+	
+	
 	
 	
 	

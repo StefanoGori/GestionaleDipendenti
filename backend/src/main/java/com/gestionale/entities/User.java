@@ -37,6 +37,9 @@ public class User {
 	@Column(name="Permissions")
 	private int permission;
 
+	@Column (name="Pwd")
+	private String pwd;
+
 		// creazione get e setter
 	public String getCF() {
 		return CF;
@@ -92,6 +95,14 @@ public class User {
 
 	public void setPermission(int permission) {
 		this.permission = permission;
+	}
+
+	public String getPwd() {
+		return pwd;
+	}
+
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
 	}
 	
 	

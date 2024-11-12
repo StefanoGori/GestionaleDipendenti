@@ -11,6 +11,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTableModule} from '@angular/material/table';
+import {MatCardModule} from '@angular/material/card';
+
 
 
 
@@ -29,6 +31,7 @@ import {MatTableModule} from '@angular/material/table';
     MatFormFieldModule,
     MatGridListModule,
     MatTableModule,
+    MatCardModule
   ],
   exports: [
     MatToolbarModule,
@@ -42,6 +45,7 @@ import {MatTableModule} from '@angular/material/table';
     MatFormFieldModule,
     MatGridListModule,
     MatTableModule,
+    MatCardModule
   ],
 })
 export class MaterialModule { }

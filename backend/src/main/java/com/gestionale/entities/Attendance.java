@@ -2,13 +2,24 @@ package com.gestionale.entities;
 
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 enum Type{
@@ -20,77 +31,79 @@ enum Type{
 @Entity
 @Table(name="attendance")
 public class Attendance {
+    
+    @Id 
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long idA;
 
-    @EmbeddedId
-    @Column()
-    private AttendanceKey Id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference(value="user-attendance")
+    @JoinColumn(name="cf", referencedColumnName="cf", nullable = false)
+    private User user; 
 
-    @OneToOne
-    @JoinColumn(name="CF", referencedColumnName="CF", insertable = false, updatable = false, nullable = false)
-    private User User;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference(value="hours-attendance")
+    @JoinColumn(name="hours", referencedColumnName="id", nullable = false)
+    private Hours hours;
 
-    @OneToOne
-    @JoinColumn(name="ID", referencedColumnName="ID", insertable = false, updatable = false, nullable = false)
-    private Hours Hours;
+    @Column(name="stamped_in")
+    @JsonFormat(pattern="HH:mm:ss")
+    private LocalTime stamped_in;
 
-    @Column(name="Stamped_In")
-    private LocalTime Stamped_In;
-
-    @Column(name="Stamped_Out")
-    private LocalTime Stamped_Out;
+    @Column(name="stamped_out")
+    @JsonFormat(pattern="HH:mm:ss")
+    private LocalTime stamped_out;
 
     @Enumerated(EnumType.STRING)
-    private Type Type;
+    private Type type;
 
     // ------------------------------------GETTER AND SETTER------------------------------------
 
-    public AttendanceKey getId() {
-        return this.Id;
+    public Long getIdA() {
+        return this.idA;
     }
 
-    public void setId(AttendanceKey Id) {
-        this.Id = Id;
+    public void setId(Long idA) {
+        this.idA = idA;
     }
 
-    public User getUser() {
-        return this.User;
+    // public User getUser() {
+    //     return this.user;
+    // }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public void setUser(User User) {
-        this.User = User;
+    // public Hours getHours() {
+    //     return this.hours;
+    // }
+
+    public void setHours(Hours hours) {
+        this.hours = hours;
     }
 
-    public Hours getHours() {
-        return this.Hours;
+    public LocalTime getStamped_in() {
+        return this.stamped_in;
     }
 
-    public void setHours(Hours Hours) {
-        this.Hours = Hours;
+    public void setStamped_in(LocalTime stamped_in) {
+        this.stamped_in = stamped_in;
     }
 
-    public LocalTime getStamped_In() {
-        return this.Stamped_In;
+    public LocalTime getStamped_out() {
+        return this.stamped_out;
     }
 
-    public void setStamped_In(LocalTime Stamped_In) {
-        this.Stamped_In = Stamped_In;
-    }
-
-    public LocalTime getStamped_Out() {
-        return this.Stamped_Out;
-    }
-
-    public void setStamped_Out(LocalTime Stamped_Out) {
-        this.Stamped_Out = Stamped_Out;
+    public void setStamped_out(LocalTime stamped_out) {
+        this.stamped_out = stamped_out;
     }
 
     public Type getType() {
-        return this.Type;
+        return this.type;
     }
 
-    public void setType(Type Type) {
-        this.Type = Type;
+    public void setType(Type type) {
+        this.type = type;
     }
-
-    
 }

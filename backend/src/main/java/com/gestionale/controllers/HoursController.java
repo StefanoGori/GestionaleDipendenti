@@ -40,7 +40,7 @@ public class HoursController {
         return new ResponseEntity<List<Hours>>(h, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/add", produces = "application/json")
+    @PostMapping(value = "/add", consumes = "application/json")
     public ResponseEntity<String> addHours(@RequestBody Hours h){
         try {
             return new ResponseEntity<String>(Hs.addHours(h), HttpStatus.OK);

@@ -1,23 +1,33 @@
 package com.gestionale.entities;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="users")
+@JsonIgnoreProperties({"Attendance"})
+
 public class User {
 	
 	
 	// creazione della chiave primaria CF con lunghezza 16, unica e not nullable
 	@Id
-	@Column(name="CF", nullable=false, length = 16, unique=true)
-	private String CF;
+	@Column(name="cf", nullable=false, length = 16, unique=true)
+	private String cf;
 
-	@OneToOne(mappedBy = "User")
-	private Attendance Attendance;
+	@OneToMany(mappedBy = "user")
+	@JsonManagedReference(value="user-attendance")
+	private List<Attendance> attendance;
 	
 	//campo nome not nullable
 	@Column(name="name", nullable=false)
@@ -41,16 +51,16 @@ public class User {
 	@Column(name="Permissions")
 	private int permission;
 
-	@Column (name="pwd")
+	@Column(name="pwd")
 	private String pwd;
 
 		// creazione get e setter
 	public String getCF() {
-		return CF;
+		return cf;
 	}
 
 	public void setCF(String cF) {
-		CF = cF;
+		cf = cF;
 	}
 
 	public String getName() {
@@ -109,12 +119,12 @@ public class User {
 		this.pwd = pwd;
 	}
 
-	public Attendance getAttendance() {
-        return Attendance;
+	public List<Attendance> getAttendance() {
+        return attendance;
     }
 
-    public void setAttendance(Attendance attendance) {
-        this.Attendance = attendance;
+    public void setAttendance(List<Attendance> attendance) {
+        this.attendance = attendance;
     }
 	
 	

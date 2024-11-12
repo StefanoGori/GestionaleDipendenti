@@ -1,75 +1,86 @@
 package com.gestionale.entities;
 
 import java.time.LocalTime;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="hours")
+@JsonIgnoreProperties({"Attendance"})
 public class Hours {
 	
 	@Id
-	@Column(name="ID",nullable = false, length=100, unique = true)
-	private String 	ID;
+	@Column(name="id",nullable = false, length=100, unique = true)
+	private String 	id;
 
-	@OneToOne(mappedBy = "Hours")
-	private Attendance Attendance;
+	@OneToMany(mappedBy = "hours")
+	@JsonManagedReference(value="hours-attendance")
+	private List<Attendance> attendance;
 	
-	@Column(name="Entrance")
-	private LocalTime Entrance;
+	@Column(name="entrance")
+	private LocalTime entrance;
 	
-	@Column(name="Leaving")
-	private LocalTime Leaving;
+	@Column(name="leaving")
+	private LocalTime leaving;
 	
 	@Column(name="day", nullable = false)
-	private LocalDate Day;
+	private LocalDate day;
+
+	
 
 // ------------------------------------GETTER AND SETTER------------------------------------
 
-	public String getID() {
-		return ID;
+	public String getId() {
+		return this.id;
 	}
 
-	public void setID(String iD) {
-		ID = iD;
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public List<Attendance> getAttendance() {
+		return this.attendance;
+	}
+
+	public void setAttendance(List<Attendance> attendance) {
+		this.attendance = attendance;
 	}
 
 	public LocalTime getEntrance() {
-		return Entrance;
+		return this.entrance;
 	}
 
 	public void setEntrance(LocalTime entrance) {
-		Entrance = entrance != null ? entrance : LocalTime.of(9, 0);
+		this.entrance = entrance;
 	}
 
 	public LocalTime getLeaving() {
-		return Leaving;
+		return this.leaving;
 	}
 
 	public void setLeaving(LocalTime leaving) {
-		Leaving = leaving != null ? leaving : LocalTime.of(18, 0);
+		this.leaving = leaving;
 	}
 
 	public LocalDate getDay() {
-		return Day;
+		return this.day;
 	}
 
 	public void setDay(LocalDate day) {
-		Day = day;
+		this.day = day;
 	}
 
-	public Attendance getAttendance() {
-        return Attendance;
-    }
-
-    public void setAttendance(Attendance attendance) {
-        this.Attendance = attendance;
-    }
+	
 }

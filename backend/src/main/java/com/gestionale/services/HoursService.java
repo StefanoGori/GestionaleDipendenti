@@ -21,7 +21,7 @@ public class HoursService {
     @Transactional
     public String addHours(Hours h) throws Exception{
         String msg="Hours added";
-        if(Hr.existsById(h.getID())) {
+        if(Hr.existsById(h.getId())) {
             msg="Hours already exists";
             throw new Exception(msg);
         }else {
@@ -46,7 +46,7 @@ public class HoursService {
     @Transactional
     public String updateHours(Hours h) throws Exception{
         String msg="Hours updated";
-        if(Hr.existsById(h.getID())) {
+        if(Hr.existsById(h.getId())) {
             Hr.save(h);
             return msg;
         }else {

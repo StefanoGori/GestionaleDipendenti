@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { timestamp } from 'rxjs';
 import { format } from 'date-fns';
+import { MatDialog } from '@angular/material/dialog';
+import { HolidaysComponent } from '../holidays/holidays.component';
+import { PermitsComponent } from '../permits/permits.component';
 
 export interface Attendance{
   id: number;
@@ -21,6 +24,7 @@ export interface Attendance{
 })
 export class DipendenteComponent {
 
+  constructor(public dialog: MatDialog) { }
 
   orari : Attendance[] =[
       {id: 1, entrance : "8:00", leaving : "18:00", day: "11/11/2024", holidays : false, permits : 2 , in : "8:00", out : "16:00"},
@@ -54,6 +58,44 @@ export class DipendenteComponent {
       const formattedTime = format(now, 'HH:mm:ss');
       this.selectedRow.out=formattedTime;
     }
+    
 
+    // Dialog per aggiungere ferie
+
+    openHolidayDialog(){
+      console.log("openHolidayDialog");
+      const dialogRef = this.dialog.open(HolidaysComponent, {
+        width: '500px',
+        height: '250px',
+        data:{day: this.selectedRow.day}
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if(result === 'yes'){
+          this.selectedRow.holidays = true;
+          console.log("ferie aggiunte");
+        }else{
+            console.log("ferie non aggiunte");
+        }
+        
+    });
+  }
+
+  onConfirm(): void{
+    if (this.selectedRow) {
+      this.selectedRow.holidays = true;  // Modifica la proprietà delle ferie
+      console.log('Ferite aggiunte per il giorno: ', this.selectedRow.day);
+    }
+  }
+
+  onCancel(){
+    console.log('Ferie non aggiunte');
+  }
+
+// Dialog per aggiungere permessi
+
+openPermitsDialog(){
+  console.log("openPermitsDialog");
+}
 
 }

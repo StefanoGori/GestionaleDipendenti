@@ -87,9 +87,9 @@
         </mat-card-content>
         <mat-card-actions>
           @if(selectedRow.entrance !== ""){
-            <button mat-button>Aggiungi Ferie</button>
+            <button mat-button (click)="openHolidayDialog()">Aggiungi Ferie</button>
             @if(!selectedRow.permits){
-              <button mat-button>Aggiungi ore di permesso</button>
+              <button mat-button (click)="openPermitsDialog()">Aggiungi ore di permesso</button>
             } @else {
               <button mat-button>Cambia ore di permesso</button>
             }

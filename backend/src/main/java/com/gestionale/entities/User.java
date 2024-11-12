@@ -1,30 +1,44 @@
 package com.gestionale.entities;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="Users")
+@Table(name="users")
+@JsonIgnoreProperties({"Attendance"})
+
 public class User {
 	
 	
 	// creazione della chiave primaria CF con lunghezza 16, unica e not nullable
 	@Id
-	@Column(name="CF", nullable=false, length = 16, unique=true)
-	private String CF;
+	@Column(name="cf", nullable=false, length = 16, unique=true)
+	private String cf;
+
+	@OneToMany(mappedBy = "user")
+	@JsonManagedReference(value="user-attendance")
+	private List<Attendance> attendance;
 	
 	//campo nome not nullable
-	@Column(name="Name", nullable=false)
+	@Column(name="name", nullable=false)
 	private String name;
 	
 	//campo cognome not nullable
-	@Column(name="Surname", nullable=false)
+	@Column(name="surname", nullable=false)
 	private String surname;
 	
 	//campo email not nullable e unico
-	@Column(name="Email", nullable=false, unique=true)
+	@Column(name="email", nullable=false, unique=true)
 	private String email;
 	
 	//campo admin default false
@@ -37,12 +51,16 @@ public class User {
 	@Column(name="Permissions")
 	private int permission;
 
+	@Column(name="pwd")
+	private String pwd;
+
+		// creazione get e setter
 	public String getCF() {
-		return CF;
+		return cf;
 	}
 
 	public void setCF(String cF) {
-		CF = cF;
+		cf = cF;
 	}
 
 	public String getName() {
@@ -92,9 +110,25 @@ public class User {
 	public void setPermission(int permission) {
 		this.permission = permission;
 	}
+
+	public String getPwd() {
+		return pwd;
+	}
+
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
+
+	public List<Attendance> getAttendance() {
+        return attendance;
+    }
+
+    public void setAttendance(List<Attendance> attendance) {
+        this.attendance = attendance;
+    }
 	
 	
-	// creazione get e setter
+
 	
 	
 	

@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { timestamp } from 'rxjs';
 import { format } from 'date-fns';
 import { MatDialog } from '@angular/material/dialog';
 import { HolidaysComponent } from '../holidays/holidays.component';
 import { PermitsComponent } from '../permits/permits.component';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 export interface Attendance{
   id: number;
@@ -22,7 +24,7 @@ export interface Attendance{
   templateUrl: './dipendente.component.html',
   styleUrl: './dipendente.component.css'
 })
-export class DipendenteComponent {
+export class DipendenteComponent implements AfterViewInit{
 
   constructor(public dialog: MatDialog) { }
 
@@ -34,11 +36,34 @@ export class DipendenteComponent {
       {id: 5, entrance : "8:00", leaving : "18:00", day: "15/11/2024", holidays : false, permits : 0, in : "", out : ""},
       {id: 6, entrance : "8:00", leaving : "18:00", day: "16/11/2024", holidays : false, permits : 0, in : "", out : ""},
       {id: 7, entrance : "8:00", leaving : "18:00", day: "17/11/2024", holidays : true, permits : 0, in : "", out : ""},
+      {id: 8, entrance : "8:00", leaving : "18:00", day: "18/11/2024", holidays : false, permits : 0, in : "", out : ""},
     ];
   
     // Tabella orari
     displayedColumns: string[] = ['day', 'schedule', 'entrance', 'leaving', 'holidays', 'permit'];
     selectedRow: Attendance =  {id: 0, entrance : "", leaving : "", day: "", holidays : false, permits : 0 , in : "", out : ""};
+
+
+    //paginator
+    pageSize = 7;
+    pageIndex = 0;
+
+    //inizializzo il dataSource con tutti gli orari
+    dataSource=new MatTableDataSource<Attendance>(this.orari);
+
+    //faccio riferimento al paginator
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+    //dopo la visualizzazione collega il paginator al dataSource
+    ngAfterViewInit(){
+      this.dataSource.paginator = this.paginator;
+    }
+
+    //metodo per gestire i cambiamenti della pagina
+    onPageChange(event:any):void{
+      this.pageIndex = event.pageIndex;
+      this.pageSize = event.pageSize;
+    }
 
 
 
@@ -96,6 +121,19 @@ export class DipendenteComponent {
 
 openPermitsDialog(){
   console.log("openPermitsDialog");
+  const dialogRef = this.dialog.open(PermitsComponent, {
+    width: '500px',
+    height: '250px',
+    data:{permits: this.selectedRow.permits}
+  });
+  dialogRef.afterClosed().subscribe(result => {
+    if(result!==null && result!==undefined){
+      this.selectedRow.permits = result;
+      console.log("permessi aggiunti: ", this.selectedRow.permits);
+    }else{
+      console.log("permessi non aggiunti");
+    }
+  });
 }
 
 }

@@ -1,0 +1,71 @@
+<mat-tab-group>
+    <!-- Lista dei Dipendenti-->
+    <mat-tab label="Dipendenti">
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          
+            <!-- Cf Column -->
+            <ng-container matColumnDef="cf">
+              <th mat-header-cell *matHeaderCellDef> CF </th>
+              <td mat-cell *matCellDef="let Dipendenti"> {{Dipendenti.cf}} </td>
+            </ng-container>
+          
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Name </th>
+              <td mat-cell *matCellDef="let Dipendenti"> {{Dipendenti.name}} </td>
+            </ng-container>
+          
+            <!-- Surname Column -->
+            <ng-container matColumnDef="surname">
+              <th mat-header-cell *matHeaderCellDef> Surname </th>
+              <td mat-cell *matCellDef="let Dipendenti"> {{Dipendenti.surname}} </td>
+            </ng-container>
+          
+            <!-- Daysoff Column -->
+            <ng-container matColumnDef="daysoff">
+              <th mat-header-cell *matHeaderCellDef> Daysoff </th>
+              <td mat-cell *matCellDef="let Dipendenti"> {{Dipendenti.daysoff}} </td>
+            </ng-container>
+            
+            <!--Permits Column-->
+            <ng-container matColumnDef="permits">
+                <th mat-header-cell *matHeaderCellDef> Permits</th>
+                <td mat-cell *matCellDef="let Dipendenti"> {{Dipendenti.permits}} </td>
+              </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          
+          
+
+    </mat-tab>
+
+    <!--Orario dell'Admin-->
+    <mat-tab label="Il tuo Orario">
+
+        <app-dipendente></app-dipendente>
+
+    </mat-tab>
+
+    <!--Orari di Tutti i Dipendenti-->
+    <mat-tab label="Orari Dipendenti"> Content 3 
+
+        <!--Input Nome-->
+        <mat-form-field class="example-full-width">
+            <mat-label>Nome</mat-label>
+            <input matInput placeholder="Mario" value="">
+          </mat-form-field>
+        <!--Input Cognome-->
+        <mat-form-field class="example-full-width">
+            <mat-label>Cognome</mat-label>
+            <input matInput placeholder="Rossi" value="">
+          </mat-form-field>
+        <!--Tabella Orario Dipendente-->
+        @if(true){
+
+        }
+
+    </mat-tab>
+  </mat-tab-group>

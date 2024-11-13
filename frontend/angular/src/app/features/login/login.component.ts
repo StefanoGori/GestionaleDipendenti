@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class LoginComponent {
 
+  #router=inject(Router);
+  #route=inject(ActivatedRoute);
+  constructor(){
+    console.log(this.#route.snapshot.data);
+  }
+
+  login():void{
+    this.#router.navigate(['/admin']);
+  }
 }

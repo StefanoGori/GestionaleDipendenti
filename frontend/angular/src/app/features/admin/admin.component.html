@@ -37,8 +37,6 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
-          
-          
 
     </mat-tab>
 
@@ -50,22 +48,33 @@
     </mat-tab>
 
     <!--Orari di Tutti i Dipendenti-->
-    <mat-tab label="Orari Dipendenti"> Content 3 
+    <mat-tab label="Orari Dipendenti">
 
         <!--Input Nome-->
         <mat-form-field class="example-full-width">
             <mat-label>Nome</mat-label>
-            <input matInput placeholder="Mario" value="">
+            <input matInput placeholder="Mario" [(ngModel)]="name" (ngModelChange)="resetSearch()">
           </mat-form-field>
         <!--Input Cognome-->
         <mat-form-field class="example-full-width">
             <mat-label>Cognome</mat-label>
-            <input matInput placeholder="Rossi" value="">
+            <input matInput placeholder="Rossi" [(ngModel)]="surname" (ngModelChange)="resetSearch()">
           </mat-form-field>
+
+          <!--Ricerca Dipendente Button-->
+              <button mat-fab extended (click)="searchDipendente()">
+                <mat-icon>search</mat-icon>
+                Search
+              </button>
+
         <!--Tabella Orario Dipendente-->
-        @if(true){
-
-        }
-
+        @if(isSearchPerformed){
+          @if(filteredDipendente.length!==0){
+            <app-dipendente></app-dipendente>
+          }
+          @else {
+            <p>utente non trovato</p>
+          }
+        } 
     </mat-tab>
   </mat-tab-group>

@@ -16,7 +16,8 @@ export interface Dipendenti{
 export class AdminComponent {
   
     constructor() { }
-
+    name: string="";
+    surname: string="";
     dipendenti: Dipendenti[] = [
       {cf: "CF1", name: "Name1", surname: "Surname1", daysoff: 0, permits: 0},
       {cf: "CF2", name: "Name2", surname: "Surname2", daysoff: 0, permits: 0},
@@ -30,4 +31,24 @@ export class AdminComponent {
 
     displayedColumns: string[] = ['cf', 'name', 'surname', 'daysoff', 'permits'];
     dataSource = this.dipendenti;
+
+    filteredDipendente: any;
+    isSearchPerformed: boolean = false;
+
+    searchDipendente() {
+      this.isSearchPerformed = true;
+      this.filteredDipendente = this.dipendenti.filter((dipendente) => {
+        
+        return (
+          dipendente.name.toLowerCase() === this.name.toLowerCase() &&
+          dipendente.surname.toLowerCase() === this.surname.toLowerCase()
+        );
+        
+      });
+      console.log(this.filteredDipendente);
+    }
+
+    resetSearch(){
+      this.isSearchPerformed = false;
+    }
 }

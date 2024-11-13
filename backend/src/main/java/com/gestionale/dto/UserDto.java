@@ -31,7 +31,7 @@ public class UserDto implements UserDetails{
 	
 	private int permits;
 	
-	private List<Timetable> prova;
+	private List<Timetable> timetables;
 
 	// metodi richiesti da UserDetails
 	

@@ -43,7 +43,7 @@ public class User {
 	@Column(name="permits", columnDefinition = "int default 0")
 	private int permits;
 	
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Timetable> timetables = new ArrayList<>();
 	
 	

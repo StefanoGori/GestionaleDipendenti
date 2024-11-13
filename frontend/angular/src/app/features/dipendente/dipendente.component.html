@@ -1,7 +1,7 @@
-<mat-grid-list cols="4" rowHeight="25%">
-  <mat-grid-tile colspan="3" rowspan="4">
+<div class="flex-container">
+  <div class="table-container">
     <!--Tabella Orari-->
-    <table mat-table [dataSource]="orari" class="mat-elevation-z8 demo-table" >
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table" >
       <!-- Day Column -->
       <ng-container matColumnDef="day">
         <th mat-header-cell *matHeaderCellDef>Day</th>
@@ -45,15 +45,26 @@
         [class.demo-row-is-clicked]="selectedRow===row"
         *matRowDef="let row; columns: displayedColumns;"
       ></tr>
-
-        
+      
+      
     </table>
-  </mat-grid-tile>
+    <div class="paginator container">
+      <!-- Paginator-->
+      <mat-paginator [length]="orari.length"
+              [pageSize]="pageSize"
+              [pageIndex]="pageIndex"
+              (page)="onPageChange($event)"
+              [hidePageSize]="true"
+              aria-label="Select page">
+        </mat-paginator>
+    </div>
+  </div>
 
-  <!--Componenti di gestione orario -->
+  
 
-  <!--Contenitore flex bottoni-->
-  <mat-grid-tile colspan="1"rowspan="2">
+  <div class="button-container">
+
+    <!--Bottoni-->
     @if(selectedRow && selectedRow.id!==0){
       <div id="container-button">
         <!--Bottone Entrata-->
@@ -66,10 +77,11 @@
         }
       </div>
     }
-  </mat-grid-tile>
-  
-  <!--Contenitore gestione orario giornaliero-->
-  <mat-grid-tile colspan="1" rowspan="1">
+  </div>
+
+  <div class="card-container">
+
+    <!--Card-->
     @if(selectedRow && selectedRow.id!==0){
       <mat-card appearance="outlined">
         <mat-card-header>
@@ -87,15 +99,16 @@
         </mat-card-content>
         <mat-card-actions>
           @if(selectedRow.entrance !== ""){
-            <button mat-button>Aggiungi Ferie</button>
+            <button mat-button (click)="openHolidayDialog()">Aggiungi Ferie</button>
             @if(!selectedRow.permits){
-              <button mat-button>Aggiungi ore di permesso</button>
+              <button mat-button (click)="openPermitsDialog()">Aggiungi ore di permesso</button>
             } @else {
-              <button mat-button>Cambia ore di permesso</button>
+              <button mat-button (click)="openPermitsDialog()">Cambia ore di permesso</button>
             }
           }
         </mat-card-actions>
       </mat-card>
     }
-  </mat-grid-tile>
-</mat-grid-list>
+  </div>
+
+</div>

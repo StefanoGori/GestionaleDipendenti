@@ -1,0 +1,18 @@
+.container {
+    display: flex;
+    flex-direction: column;    /* Dispone gli elementi in colonna */
+    justify-content: space-between;  /* Crea spazio tra gli elementi */
+    align-items: center;      /* Centra orizzontalmente gli elementi */
+    height: 200px;            /* Imposta l'altezza del contenitore (modificabile a seconda delle tue esigenze) */
+}
+
+.container p {
+    flex-grow: 1;             /* Fa sì che il paragrafo occupi lo spazio disponibile */
+    text-align: center;       /* Centra il testo */
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;  /* Centra i bottoni orizzontalmente */
+    gap: 10px;                /* Aggiunge spazio tra i bottoni */
+}

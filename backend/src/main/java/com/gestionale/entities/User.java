@@ -1,66 +1,60 @@
 package com.gestionale.entities;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="users")
-@JsonIgnoreProperties({"Attendance"})
 
 public class User {
 	
 	
 	// creazione della chiave primaria CF con lunghezza 16, unica e not nullable
 	@Id
-	@Column(name="cf", nullable=false, length = 16, unique=true)
+	@Column(name="cf", nullable=false, length = 16)
 	private String cf;
 
-	@OneToMany(mappedBy = "user")
-	@JsonManagedReference(value="user-attendance")
-	private List<Attendance> attendance;
-	
 	//campo nome not nullable
-	@Column(name="name", nullable=false)
+	@Column(name="name", nullable=false, length = 100)
 	private String name;
 	
 	//campo cognome not nullable
-	@Column(name="surname", nullable=false)
+	@Column(name="surname", nullable=false, length = 100)
 	private String surname;
 	
-	//campo email not nullable e unico
-	@Column(name="email", nullable=false, unique=true)
-	private String email;
+	//campo password not nullable
+	@Column(name="password", nullable=false)
+	private String password;
 	
 	//campo admin default false
-	@Column(name="Admin",  columnDefinition = "boolean default false")
+	@Column(name="admin",  columnDefinition = "boolean default false")
 	private Boolean admin;
 	
-	@Column(name="Holidays")
-	private int holidays;
+	@Column(name="daysoff", columnDefinition = "int default 0" )
+	private int daysoff;
 	
-	@Column(name="Permissions")
-	private int permission;
+	@Column(name="permits", columnDefinition = "int default 0")
+	private int permits;
+	
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Timetable> timetables = new ArrayList<>();
+	
+	
+	// creazione getters e setters
 
-	@Column(name="pwd")
-	private String pwd;
-
-		// creazione get e setter
-	public String getCF() {
+	public String getCf() {
 		return cf;
 	}
 
-	public void setCF(String cF) {
-		cf = cF;
+	public void setCf(String cf) {
+		this.cf = cf;
 	}
 
 	public String getName() {
@@ -79,12 +73,12 @@ public class User {
 		this.surname = surname;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public Boolean getAdmin() {
@@ -95,49 +89,21 @@ public class User {
 		this.admin = admin;
 	}
 
-	public int getHolidays() {
-		return holidays;
+	public int getDaysoff() {
+		return daysoff;
 	}
 
-	public void setHolidays(int holidays) {
-		this.holidays = holidays;
+	public void setDaysoff(int daysoff) {
+		this.daysoff = daysoff;
 	}
 
-	public int getPermission() {
-		return permission;
+	public int getPermits() {
+		return permits;
 	}
 
-	public void setPermission(int permission) {
-		this.permission = permission;
+	public void setPermits(int permits) {
+		this.permits = permits;
+		
 	}
-
-	public String getPwd() {
-		return pwd;
-	}
-
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
-	}
-
-	public List<Attendance> getAttendance() {
-        return attendance;
-    }
-
-    public void setAttendance(List<Attendance> attendance) {
-        this.attendance = attendance;
-    }
 	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }

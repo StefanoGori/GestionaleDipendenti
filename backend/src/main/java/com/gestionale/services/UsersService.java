@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UserDetailsService;
 //import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,11 +26,11 @@ import com.gestionale.repositories.UsersRepository;
 public class UsersService {
 	
 	private final UsersRepository usersRepository;
-	// private final UserMapper usersMapper;
+	private final UserMapper usersMapper;
 	
-	public UsersService (UsersRepository usersRepository) {
+	public UsersService (UsersRepository usersRepository, UserMapper usersMapper) {
 		this.usersRepository = usersRepository;
-		// this.usersMapper = usersMapper;
+		this.usersMapper = usersMapper;
 	}
 	
 	// CRUD Operation
@@ -51,13 +52,13 @@ public class UsersService {
 	}
 	
 	// metodo per Spring security di recupearare l'username (per noi sarà il codice fiscale, nello UserDto è username per questo motivo)
-	// @Override
-	// @Transactional(readOnly=true)
-	// public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-	// 	return usersRepository.findByCf(username)
-	// 			.map(usersMapper::toUserDto)
-	// 			.orElseThrow(()-> new UsernameNotFoundException("User not found:" + username));
-	// }
+	@Override
+	@Transactional(readOnly=true)
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		return usersRepository.findByCf(username)
+				.map(usersMapper::toUserDto)
+				.orElseThrow(()-> new UsernameNotFoundException("User not found:" + username));
+	}
 	
 	// create
 	
@@ -72,6 +73,7 @@ public class UsersService {
 			String msg= "User's cf is not valid";
 			throw new Exception(msg);
 		}
+		//user.setPassword(passwordEncoder.encode(user.getPassword()));
 		usersRepository.save(user);
 		String msg= "User created successfully";
 		return msg;

@@ -1,4 +1,44 @@
-<p>add-dipendente works!</p>
+
 <div>
-    
+    <form>
+        <!--CF-->
+        <mat-form-field>
+            <mat-label>CF</mat-label>
+            <input matInput placeholder="CF" [(ngModel)]="cf" name="cf" required>
+        </mat-form-field>
+
+        <!--Name-->
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Name" [(ngModel)]="name" name="name" required>
+        </mat-form-field>
+
+        <!--Surname-->
+        <mat-form-field>
+            <mat-label>Surname</mat-label>
+            <input matInput placeholder="Surname" [(ngModel)]="surname" name="surname" required>
+        </mat-form-field>
+
+        <!--Admin-->
+            <mat-label>Admin</mat-label>
+            <mat-slide-toggle>Slide me!</mat-slide-toggle>
+
+        <!--Holidays-->
+        <mat-form-field>
+            <mat-label>Holidays</mat-label>
+            <input matInput placeholder="Holidays" [(ngModel)]="holidays" name="holidays" required>
+        </mat-form-field>
+
+        <!--Permits-->
+        <mat-form-field>
+            <mat-label>Permits</mat-label>
+            <input matInput placeholder="Permits" [(ngModel)]="permits" name="permits" required>
+        </mat-form-field>
+
+        <!--Pwd-->
+        <mat-form-field>
+            <mat-label>Pwd</mat-label>
+            <input matInput placeholder="Pwd" [(ngModel)]="pwd" name="pwd" required>
+        </mat-form-field>
+    </form>
 </div>

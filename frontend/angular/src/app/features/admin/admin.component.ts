@@ -68,10 +68,10 @@ export class AdminComponent {
     // }
 
     searchDipendente(name:string, surname:string){
-      this.isSearchPerformed = true;
-      this.filteredDipendente = this.users$.pipe(
-        filter((user:User)=>user.name.toLowerCase()===name.toLowerCase() && user.surname.toLowerCase()===surname.toLowerCase())
-      )
+      // this.isSearchPerformed = true;
+      // this.filteredDipendente = this.users$.pipe(
+      //   filter((user:User)=>user.name.toLowerCase()===name.toLowerCase() && user.surname.toLowerCase()===surname.toLowerCase())
+      // )
     }
 
     resetSearch(){

@@ -54,7 +54,7 @@ export class UserService {
         surname : surname,
         admin : false,
         holidays : 0,
-        permission : 0,
+        permits : 0,
         pwd : pwd
       }
       this.httpService.addUser(user).subscribe({
@@ -80,7 +80,7 @@ export class UserService {
       users[userIndex].surname=newSurname;
       users[userIndex].admin=newAdmin;
       users[userIndex].holidays=newHolidays;
-      users[userIndex].permission=newPermission;
+      users[userIndex].permits=newPermission;
       users[userIndex].pwd=newPwd;
 
       this.httpService.editUser(users[userIndex]).subscribe({

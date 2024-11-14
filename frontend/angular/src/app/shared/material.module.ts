@@ -12,6 +12,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTableModule} from '@angular/material/table';
 import {MatCardModule} from '@angular/material/card';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 
 
@@ -31,7 +32,8 @@ import {MatCardModule} from '@angular/material/card';
     MatFormFieldModule,
     MatGridListModule,
     MatTableModule,
-    MatCardModule
+    MatCardModule,
+    MatSlideToggleModule
   ],
   exports: [
     MatToolbarModule,
@@ -45,7 +47,8 @@ import {MatCardModule} from '@angular/material/card';
     MatFormFieldModule,
     MatGridListModule,
     MatTableModule,
-    MatCardModule
+    MatCardModule,
+    MatSlideToggleModule
   ],
 })
 export class MaterialModule { }

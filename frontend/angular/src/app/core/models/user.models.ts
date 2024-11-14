@@ -4,6 +4,6 @@ export interface User{
     surname: string, 
     admin: boolean,
     holidays: number,
-    permission: number,
+    permits: number,
     pwd: string,
 }

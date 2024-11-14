@@ -1,0 +1,36 @@
+.modal{
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.modal-body{
+    max-height: calc(100% - 50px);
+    overflow: auto;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    text-align: center;
+}
+
+button{
+    min-height: 48px;
+}
+    
+.modal-footer{
+    display: flex;
+    justify-content: end;
+    margin-top: auto;
+    background: #FFFFFF;
+}
+
+.example-full-width {
+    margin-top: 8px;
+}
+
+

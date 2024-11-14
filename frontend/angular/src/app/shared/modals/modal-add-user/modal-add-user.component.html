@@ -1,0 +1,49 @@
+<div class="modal">
+    <div class="modal-body">
+      <!--Form Modale-->
+      <form class="example-form" [formGroup]="formModal" (ngSubmit)="onSubmit()">
+        
+        <!-- Input CF-->
+        <mat-form-field class="example-full-width">
+            <mat-label>Tax Code</mat-label>
+            <input matInput placeholder="Enter User's Tax Code" [formControl]="formModal.controls.cf">
+        </mat-form-field>
+        <!--Input nome-->
+        <mat-form-field class="example-full-width">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Enter User's Name" [formControl]="formModal.controls.name">
+        </mat-form-field>
+        <!--Input Cognome-->
+        <mat-form-field class="example-full-width">
+          <mat-label>Surname</mat-label>
+          <input matInput placeholder="Enter User's Surname" [formControl]="formModal.controls.surname">
+        </mat-form-field>
+        <!--Input Admin Toggle-->
+        <p><mat-slide-toggle labelPosition="before" [formControl]="formModal.controls.admin"> Is an Admin?</mat-slide-toggle></p>
+        <!--Input holidays-->
+        <mat-form-field class="example-full-width">
+          <mat-label>Day of Holidays</mat-label>
+          <input matInput placeholder="Enter User's day Holidays" [formControl]="formModal.controls.holidays">
+        </mat-form-field>
+        <!--Input permits-->
+        <mat-form-field class="example-full-width">
+          <mat-label>Hour of Permits</mat-label>
+          <input matInput placeholder="Enter User's hours permits" [formControl]="formModal.controls.permits">
+        </mat-form-field>
+        <!--Input password-->
+        <mat-form-field class="example-full-width">
+          <mat-label>Password</mat-label>
+          <input matInput placeholder="Enter User's password" [formControl]="formModal.controls.pwd">
+        </mat-form-field>
+        <!-- Bottone invia-->
+      </form>
+    </div>
+    <div class="modal-footer">
+      <div class="example-button-row">
+        <!-- <button mat-flat-button type="submit" [disabled]="!formModal.valid" (click)="onSubmit()">Aggiungi Developer</button> -->
+      </div>
+      <div class="example-button-row">
+        <!-- <button mat-stroked-button (click)="closeModal()">Chiudi</button> -->
+      </div>
+    </div>
+  </div>

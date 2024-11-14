@@ -47,16 +47,7 @@ export class UserService {
       
     // }
 
-    addUser(cf: string, name: string, surname:string, pwd:string, holidays:number, permits:number, admin:boolean){
-      const user ={
-        cf: cf,
-        name: name,
-        surname : surname,
-        admin : admin,
-        holidays : holidays,
-        permits : permits,
-        pwd : pwd
-      }
+    addUser(user : User){
       this.httpService.addUser(user).subscribe({
         next : () => {
           let users = this.users$.getValue(); 

@@ -37,7 +37,6 @@ export class AdminComponent {
       this.users$.subscribe({
         next: (value)=>{this.dataSource.data=value}
       });
-   
     }
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -81,10 +80,11 @@ export class AdminComponent {
     //aggiunta dipendente
     openAddDipendente(){
       const dialogRef=this.dialog.open(AddDipendenteComponent,{
-        width: '500px',
-        height: '250px'
+        width: '900px',
+        height: 'auto'
       });
-      dialogRef.afterClosed().subscribe(result=>{
+      dialogRef.afterClosed().subscribe({
+        next: (result) => result ? this.userService.addUser(result) : null,
       });
     }
 

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,14 +31,17 @@ import { DeleteDipendenteComponent } from './features/delete-dipendente/delete-d
     AddDipendenteComponent,
     EditDipendenteComponent,
     DeleteDipendenteComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SharedModule, 
+    ReactiveFormsModule,
       ],
   exports: [
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule,
 
   ],
   providers: [

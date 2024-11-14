@@ -105,5 +105,15 @@ public class User {
 		this.permits = permits;
 		
 	}
+
+//	public List<Timetable> getTimetables() {
+//		return timetables;
+//	}
+
+	public void setTimetables(List<Timetable> timetables) {
+		this.timetables = timetables;
+	}
+	
+	
 	
 }

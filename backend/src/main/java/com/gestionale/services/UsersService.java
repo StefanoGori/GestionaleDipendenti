@@ -4,23 +4,27 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
+//import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.userdetails.UserDetailsService;
+//import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.gestionale.dto.UserDto;
+//import com.gestionale.dto.UserDto;
 import com.gestionale.entities.User;
-import com.gestionale.mapper.UserMapper;
+//import com.gestionale.mappers.UserMapper;
 import com.gestionale.repositories.UsersRepository;
 
 
 @Service
+//public class UsersService implements UserDetailsService {
 public class UsersService {
 	
 	private final UsersRepository usersRepository;
-	//private final UserMapper userMapper;
+	//private final UserMapper usersMapper;
 	
 	public UsersService (UsersRepository usersRepository) {
 		this.usersRepository = usersRepository;
-		//this.userMapper = userMapper;
+//		this.usersMapper = usersMapper;
 	}
 	
 	// CRUD Operation
@@ -40,6 +44,15 @@ public class UsersService {
 		String msg= "The user does not exist";
 		throw new Exception(msg);
 	}
+	
+	// metodo per Spring security di recupearare l'username (per noi sarà il codice fiscale, nello UserDto è username per questo motivo)
+//	@Override
+//	@Transactional(readOnly=true)
+//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//		return usersRepository.findByCf(username)
+//				.map(usersMapper::toUserDto)
+//				.orElseThrow(()-> new UsernameNotFoundException("User not found:" + username));
+//	}
 	
 	// create
 	
@@ -84,6 +97,8 @@ public class UsersService {
 			return msg;
 		}
 	}
+
+
 	
 	
 	

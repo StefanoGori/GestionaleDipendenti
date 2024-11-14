@@ -44,7 +44,6 @@
               (page)="onPageChange($event)"
               aria-label="Select page"
           >
-
           </mat-paginator>
         </div>
     </mat-tab>
@@ -71,7 +70,8 @@
           </mat-form-field>
 
           <!--Ricerca Dipendente Button-->
-              <button mat-fab extended (click)="searchDipendente()">
+              <button mat-fab extended>
+                <!-- (click)="searchDipendente()" -->
                 <mat-icon>search</mat-icon>
                 Search
               </button>

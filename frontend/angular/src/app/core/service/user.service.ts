@@ -47,24 +47,29 @@ export class UserService {
       
     // }
 
-    // // metodo che mi restituisce tutti gli utenti
-    // getAllUsers(){
-    //   return this.users;
-    // }
-
-    // addUser(cf: string, name: string, surname:string, email:string, pwd:string){
-    //   const user ={
-    //     cf: crypto.randomUUID(),
-    //     name: name,
-    //     surname : surname,
-    //     email : email,
-    //     admin : false,
-    //     holidays : 0,
-    //     permission : 0,
-    //     pwd : pwd
-    //   }
-    //   this.users.push(user);
-    // }
+    addUser(cf: string, name: string, surname:string, email:string, pwd:string){
+      const user ={
+        cf: cf,
+        name: name,
+        surname : surname,
+        email : email,
+        admin : false,
+        holidays : 0,
+        permission : 0,
+        pwd : pwd
+      }
+      this.httpService.addUser(user).subscribe({
+        next : () => {
+          let users = this.users$.getValue(); 
+          users.push(user);
+          this.users$.next(users);
+          // aggingere funzione per modale
+        },
+        error : (err) => {
+          console.log(err);
+        }
+      })
+    }
 
 
 

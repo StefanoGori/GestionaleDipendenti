@@ -1,4 +1,4 @@
-package com.gestionale.mapper;
+package com.gestionale.mappers;
 
 import com.gestionale.entities.Timetable;
 

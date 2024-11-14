@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gestionale.dto.UserDto;
 import com.gestionale.entities.User;
 import com.gestionale.services.UsersService;
 
@@ -28,10 +29,8 @@ public class UsersController {
     }
 
     @GetMapping("all")
-    public ResponseEntity<List<User>> getUsers() {
-    	List<User> listUsers=usersService.findUsers();
-    	return new ResponseEntity<>(listUsers, HttpStatus.OK);
-
+    public List<User> getUsers() {
+    	return usersService.findUsers();
     }
     
     @GetMapping("{cf}")

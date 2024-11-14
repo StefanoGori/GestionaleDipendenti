@@ -60,6 +60,7 @@ export class UserService {
       this.httpService.addUser(user).subscribe({
         next : () => {
           let users = this.users$.getValue(); 
+          console.log(users);
           users.push(user);
           this.users$.next(users);
           // aggingere funzione per modale

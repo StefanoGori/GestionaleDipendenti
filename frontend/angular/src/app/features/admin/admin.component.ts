@@ -3,8 +3,13 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { UserService } from '../../core/service/user.service';
 import { DipendenteComponent } from '../dipendente/dipendente.component';
-import { async, toArray } from 'rxjs';
+import { async, filter, toArray } from 'rxjs';
 import { User } from '../../core/models/user.models';
+import { AddDipendenteComponent } from '../add-dipendente/add-dipendente.component';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteDipendenteComponent } from '../delete-dipendente/delete-dipendente.component';
+import { EditDipendenteComponent } from '../edit-dipendente/edit-dipendente.component';
+import { TimeTableService } from '../../core/service/timetable.service';
 
 
 @Component({
@@ -13,43 +18,33 @@ import { User } from '../../core/models/user.models';
   styleUrl: './admin.component.css'
 })
 export class AdminComponent {
-    constructor() { }
+    constructor(public dialog: MatDialog) { }
     name: string="";
     surname: string="";
-<<<<<<< HEAD
-    dipendenti: Dipendenti[] = [
-      {cf: "CF1", name: "Name1", surname: "Surname1", daysoff: 0, permits: 0},
-      {cf: "CF2", name: "Name2", surname: "Surname2", daysoff: 0, permits: 0},
-      {cf: "CF3", name: "Name3", surname: "Surname3", daysoff: 0, permits: 0},
-      {cf: "CF4", name: "Name4", surname: "Surname4", daysoff: 0, permits: 0},
-      {cf: "CF5", name: "Name5", surname: "Surname5", daysoff: 0, permits: 0},
-      {cf: "CF6", name: "Name6", surname: "Surname6", daysoff: 0, permits: 0},
-      {cf: "CF7", name: "Name7", surname: "Surname7", daysoff: 0, permits: 0},
-      {cf: "CF8", name: "Name8", surname: "Surname8", daysoff: 0, permits: 0},
-    ]; 
-=======
->>>>>>> 4c0ad46f91b43e35ff8ccef75d0b350552f4226b
     userService=inject(UserService);
+    timeTableService=inject(TimeTableService);
     users$=this.userService.allUsers;
 
-    displayedColumns: string[] = ['cf', 'name', 'surname', 'daysoff', 'permits'];
+    displayedColumns: string[] = ['cf', 'name', 'surname', 'daysoff', 'permits', 'edit'];
 
     //Paginator
-    pageSize=10;
+    pageSize=3;
     pageIndex=0;
     pageSizeOptions=[5,10,25,100];
 
-    dataSource = this.users$;
-
+    dataSource = new MatTableDataSource();
     ngOnInit(){
+      this.users$.subscribe({
+        next: (value)=>{this.dataSource.data=value}
+      });
    
     }
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-    // ngAfterViewInit(){
-    //   this.dataSource.paginator = this.paginator;
-    // }
+    ngAfterViewInit(){
+      this.dataSource.paginator = this.paginator;
+    }
 
     onPageChange(event: any){
       this.pageIndex = event.pageIndex;
@@ -72,7 +67,42 @@ export class AdminComponent {
     //   console.log(this.filteredDipendente);
     // }
 
+    searchDipendente(name:string, surname:string){
+      this.isSearchPerformed = true;
+      this.filteredDipendente = this.users$.pipe(
+        filter((user:User)=>user.name.toLowerCase()===name.toLowerCase() && user.surname.toLowerCase()===surname.toLowerCase())
+      )
+    }
+
     resetSearch(){
       this.isSearchPerformed = false;
+    }
+
+    //aggiunta dipendente
+    openAddDipendente(){
+      const dialogRef=this.dialog.open(AddDipendenteComponent,{
+        width: '500px',
+        height: '250px'
+      });
+      dialogRef.afterClosed().subscribe(result=>{
+      });
+    }
+
+    openDeleteDipendente(){
+      const dialogRef=this.dialog.open(DeleteDipendenteComponent,{
+        width: '500px',
+        height: '250px'
+      });
+      dialogRef.afterClosed().subscribe(result=>{
+      });
+    }
+
+    openEditDipendente(){
+      const dialogRef=this.dialog.open(EditDipendenteComponent,{
+        width: '500px',
+        height: '250px'
+      });
+      dialogRef.afterClosed().subscribe(result=>{
+      });
     }
 }

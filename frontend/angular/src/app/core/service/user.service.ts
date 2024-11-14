@@ -47,12 +47,11 @@ export class UserService {
       
     // }
 
-    addUser(cf: string, name: string, surname:string, email:string, pwd:string){
+    addUser(cf: string, name: string, surname:string, pwd:string){
       const user ={
         cf: cf,
         name: name,
         surname : surname,
-        email : email,
         admin : false,
         holidays : 0,
         permission : 0,
@@ -69,6 +68,38 @@ export class UserService {
           console.log(err);
         }
       })
+    }
+
+    editUser(cf: string, newName: string, newSurname:string, newAdmin:boolean, newHolidays:number, newPermission:number, newPwd:string){
+      let users=this.users$.getValue();
+      const userIndex=users.findIndex((user)=>user.cf===cf);
+      if(userIndex==-1){
+        throw new Error("Utente non trovato");
+      }
+      users[userIndex].name=newName;
+      users[userIndex].surname=newSurname;
+      users[userIndex].admin=newAdmin;
+      users[userIndex].holidays=newHolidays;
+      users[userIndex].permission=newPermission;
+      users[userIndex].pwd=newPwd;
+
+      this.httpService.editUser(users[userIndex]).subscribe({
+        next:()=>{
+          this.users$.next(users);
+        },
+        error:(err)=>{console.log(err);}
+      });
+    }
+
+    deleteUser(cf: string){
+      this.httpService.deleteUser(cf).subscribe({
+        next:()=>{
+          let users=this.users$.getValue();
+          users=users.filter((user)=>user.cf!==cf);
+          this.users$.next(users);
+        },
+        error:(err)=>{console.log(err);}
+      });
     }
 
 

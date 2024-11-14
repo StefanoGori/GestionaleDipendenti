@@ -13,6 +13,9 @@ import { HolidaysComponent } from './features/holidays/holidays.component';
 import { PermitsComponent } from './features/permits/permits.component';
 import { AdminComponent } from './features/admin/admin.component';
 import { HttpClient } from '@angular/common/http';
+import { AddDipendenteComponent } from './features/add-dipendente/add-dipendente.component';
+import { EditDipendenteComponent } from './features/edit-dipendente/edit-dipendente.component';
+import { DeleteDipendenteComponent } from './features/delete-dipendente/delete-dipendente.component';
 
 
 @NgModule({
@@ -24,6 +27,9 @@ import { HttpClient } from '@angular/common/http';
     HolidaysComponent,
     PermitsComponent,
     AdminComponent,
+    AddDipendenteComponent,
+    EditDipendenteComponent,
+    DeleteDipendenteComponent,
   ],
   imports: [
     BrowserModule,

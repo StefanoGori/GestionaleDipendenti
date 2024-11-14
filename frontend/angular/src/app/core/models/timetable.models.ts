@@ -1,3 +1,5 @@
+import { User } from "./user.models";
+
 export interface TimeTable{
     id: number;
     day: string;
@@ -7,5 +9,5 @@ export interface TimeTable{
     stamped_out?: string;
     holiday: boolean;
     usedpermits:number;
-    userId:number;
+    user: User;
 }

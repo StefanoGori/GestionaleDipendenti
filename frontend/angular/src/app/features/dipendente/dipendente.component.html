@@ -64,17 +64,12 @@
     <!--Bottoni-->
     @if(selectedRow && selectedRow.id!==0){
       <div id="container-button">
-        <script>
-          console.log(selectedRow.in);
-          console.log(dataSource.data);
-        </script>
         <!--Bottone Entrata-->
         @if(selectedRow.stamped_in===null){
-          <p>secondo if</p>
         <button mat-flat-button (click)="stampEntry()">Entrance</button>
         }
         <!--Bottone Uscita-->
-        @if(selectedRow.stamped_out===""){
+        @if(selectedRow.stamped_out===null){
         <button mat-flat-button [disabled]="!selectedRow.stamped_in" (click)="stampExit()">Leaving</button>
         }
       </div>

@@ -79,12 +79,16 @@ export class DipendenteComponent implements AfterViewInit{
       const now = new Date();
       const formattedDate = format(now, 'HH:mm:ss');
       this.selectedRow.stamped_in=formattedDate;
+      console.log("Entrata timbrata alle: ", formattedDate);
+      this.timeTableService.editStamped_in(this.selectedRow.id, this.selectedRow.stamped_in);
     }
 
     stampExit(){
       const now = new Date();
       const formattedTime = format(now, 'HH:mm:ss');
       this.selectedRow.stamped_out=formattedTime;
+      console.log("Uscita timbrata alle: ", formattedTime);
+      this.timeTableService.editStamped_out(this.selectedRow.id, this.selectedRow.stamped_out);
     }
     
 
@@ -101,6 +105,7 @@ export class DipendenteComponent implements AfterViewInit{
       dialogRef.afterClosed().subscribe(result => {
         if(result === 'yes'){
           this.selectedRow.holidays = true;
+          this.timeTableService.editHoliday(this.selectedRow.id, this.selectedRow.holidays);
           console.log("ferie aggiunte");
         }else{
             console.log("ferie non aggiunte");

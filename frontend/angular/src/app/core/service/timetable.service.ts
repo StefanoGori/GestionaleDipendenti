@@ -113,4 +113,58 @@ export class TimeTableService {
             }
         });
     }
+
+    editStamped_in(id: number, newStamped_in: string){
+        let timeTables = this.timeTables$.getValue();
+        const timeTableIndex = timeTables.findIndex((timeTable)=>timeTable.id===id);
+        if(timeTableIndex==-1){
+            throw new Error("Orario non trovato");
+        }
+        timeTables[timeTableIndex].stamped_in = newStamped_in;
+        console.log(timeTables[timeTableIndex].stamped_in
+
+        );
+        this.httpService.editTimeTable(timeTables[timeTableIndex]).subscribe({
+            next: ()=>{
+                this.timeTables$.next(timeTables);
+            },
+            error: (error)=>{
+                console.log(error);
+            }
+        });
+    }
+
+    editStamped_out(id: number, newStamped_out: string){
+        let timeTables = this.timeTables$.getValue();
+        const timeTableIndex = timeTables.findIndex((timeTable)=>timeTable.id===id);
+        if(timeTableIndex==-1){
+            throw new Error("Orario non trovato");
+        }
+        timeTables[timeTableIndex].stamped_out = newStamped_out;
+        this.httpService.editTimeTable(timeTables[timeTableIndex]).subscribe({
+            next: ()=>{
+                this.timeTables$.next(timeTables);
+            },
+            error: (error)=>{
+                console.log(error);
+            }
+        });
+    }
+
+    editHoliday(id: number, newHoliday: boolean){
+        let timeTables = this.timeTables$.getValue();
+        const timeTableIndex = timeTables.findIndex((timeTable)=>timeTable.id===id);
+        if(timeTableIndex==-1){
+            throw new Error("Orario non trovato");
+        }
+        timeTables[timeTableIndex].holiday = newHoliday;
+        this.httpService.editTimeTable(timeTables[timeTableIndex]).subscribe({
+            next: ()=>{
+                this.timeTables$.next(timeTables);
+            },
+            error: (error)=>{
+                console.log(error);
+            }
+        });
+    }
 }

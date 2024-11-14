@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { timestamp } from 'rxjs';
 import { format } from 'date-fns';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,16 +6,17 @@ import { HolidaysComponent } from '../holidays/holidays.component';
 import { PermitsComponent } from '../permits/permits.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { TimeTableService } from '../../core/service/timetable.service';
 
-export interface Attendance{
+export interface timeTable{
   id: number;
   entrance : string;
   leaving : string; 
   day: string; 
   holidays: boolean; 
   permits :number; 
-  in :string; 
-  out : string;
+  stamped_in :string; 
+  stamped_out : string;
 
 }
 
@@ -27,29 +28,31 @@ export interface Attendance{
 export class DipendenteComponent implements AfterViewInit{
 
   constructor(public dialog: MatDialog) { }
+  timeTableService=inject(TimeTableService);
+  timeTable$=this.timeTableService.allTimeTables;
 
-  orari : Attendance[] =[
-      {id: 1, entrance : "8:00", leaving : "18:00", day: "11/11/2024", holidays : false, permits : 2 , in : "8:00", out : "16:00"},
-      {id: 2, entrance : "9:00", leaving : "18:00", day: "12/11/2024", holidays : true , permits : 0, in : "8:00", out : "18:00"},
-      {id: 3, entrance : "8:00", leaving : "18:00", day: "13/11/2024", holidays : false, permits : 0, in : "8:00", out : "18:00"},
-      {id: 4, entrance : "8:00", leaving : "18:00", day: "14/11/2024", holidays : false, permits : 0, in : "8:00", out : "18:00"},
-      {id: 5, entrance : "8:00", leaving : "18:00", day: "15/11/2024", holidays : false, permits : 0, in : "", out : ""},
-      {id: 6, entrance : "8:00", leaving : "18:00", day: "16/11/2024", holidays : false, permits : 0, in : "", out : ""},
-      {id: 7, entrance : "8:00", leaving : "18:00", day: "17/11/2024", holidays : true, permits : 0, in : "", out : ""},
-      {id: 8, entrance : "8:00", leaving : "18:00", day: "18/11/2024", holidays : false, permits : 0, in : "", out : ""},
-    ];
+  //inizializzo il dataSource con tutti gli orari
+  dataSource=new MatTableDataSource();
+  ngOnInit(){
+    this.timeTable$.subscribe({
+      next: (value)=>{
+        this.dataSource.data=value;
+        console.log(this.dataSource.data);
+      }, error: (error)=> console.error("Errore:",error)
+    });
+  }
   
     // Tabella orari
     displayedColumns: string[] = ['day', 'schedule', 'entrance', 'leaving', 'holidays', 'permit'];
-    selectedRow: Attendance =  {id: 0, entrance : "", leaving : "", day: "", holidays : false, permits : 0 , in : "", out : ""};
-
-
+    selectedRow: timeTable =  {id: 0, entrance : "", leaving : "", day: "", holidays : false, permits : 0 , stamped_in : "", stamped_out : ""};
+    
+    
     //paginator
     pageSize = 7;
     pageIndex = 0;
 
-    //inizializzo il dataSource con tutti gli orari
-    dataSource=new MatTableDataSource<Attendance>(this.orari);
+    
+    
 
     //faccio riferimento al paginator
     @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -75,13 +78,17 @@ export class DipendenteComponent implements AfterViewInit{
       // const formattedDate = now.toLocaleString();
       const now = new Date();
       const formattedDate = format(now, 'HH:mm:ss');
-      this.selectedRow.in=formattedDate;
+      this.selectedRow.stamped_in=formattedDate;
+      console.log("Entrata timbrata alle: ", formattedDate);
+      this.timeTableService.editStamped_in(this.selectedRow.id, this.selectedRow.stamped_in);
     }
 
     stampExit(){
       const now = new Date();
       const formattedTime = format(now, 'HH:mm:ss');
-      this.selectedRow.out=formattedTime;
+      this.selectedRow.stamped_out=formattedTime;
+      console.log("Uscita timbrata alle: ", formattedTime);
+      this.timeTableService.editStamped_out(this.selectedRow.id, this.selectedRow.stamped_out);
     }
     
 
@@ -98,6 +105,7 @@ export class DipendenteComponent implements AfterViewInit{
       dialogRef.afterClosed().subscribe(result => {
         if(result === 'yes'){
           this.selectedRow.holidays = true;
+          this.timeTableService.editHoliday(this.selectedRow.id, this.selectedRow.holidays);
           console.log("ferie aggiunte");
         }else{
             console.log("ferie non aggiunte");

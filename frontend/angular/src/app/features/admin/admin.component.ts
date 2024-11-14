@@ -31,7 +31,7 @@ export class AdminComponent {
       {cf: "CF6", name: "Name6", surname: "Surname6", daysoff: 0, permits: 0},
       {cf: "CF7", name: "Name7", surname: "Surname7", daysoff: 0, permits: 0},
       {cf: "CF8", name: "Name8", surname: "Surname8", daysoff: 0, permits: 0},
-    ];
+    ]; 
     userService=inject(UserService);
     users$=this.userService.allUsers;
 

@@ -47,14 +47,14 @@ export class UserService {
       
     // }
 
-    addUser(cf: string, name: string, surname:string, pwd:string){
+    addUser(cf: string, name: string, surname:string, pwd:string, holidays:number, permits:number, admin:boolean){
       const user ={
         cf: cf,
         name: name,
         surname : surname,
-        admin : false,
-        holidays : 0,
-        permits : 0,
+        admin : admin,
+        holidays : holidays,
+        permits : permits,
         pwd : pwd
       }
       this.httpService.addUser(user).subscribe({

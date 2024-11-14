@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { UserService } from '../../core/service/user.service';
 
 
 @Component({
@@ -7,6 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './add-dipendente.component.css'
 })
 export class AddDipendenteComponent {
+  userService=inject(UserService);
   name: string="";
   surname: string="";
   cf: string="";
@@ -15,6 +17,8 @@ export class AddDipendenteComponent {
   permits: number=0;
   admin: boolean=false;
 
-
+  addDipendente(){
+    this.userService.addUser(this.cf, this.name, this.surname, this.pwd, this.holidays, this.permits, this.admin);
+  }
 
 }

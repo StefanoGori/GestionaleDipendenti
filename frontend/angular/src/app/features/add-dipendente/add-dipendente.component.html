@@ -20,8 +20,10 @@
         </mat-form-field>
 
         <!--Admin-->
-            <mat-label>Admin</mat-label>
-            <mat-slide-toggle>Slide me!</mat-slide-toggle>
+            <mat-form-field>
+                <mat-label>Admin</mat-label>
+                <input matInput placeholder="Admin" [(ngModel)]="admin" name="admin" required>
+            </mat-form-field>
 
         <!--Holidays-->
         <mat-form-field>
@@ -41,4 +43,5 @@
             <input matInput placeholder="Pwd" [(ngModel)]="pwd" name="pwd" required>
         </mat-form-field>
     </form>
+    <button mat-raised-button (click)="addDipendente()">Add</button>
 </div>

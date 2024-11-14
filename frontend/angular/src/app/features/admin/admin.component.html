@@ -1,7 +1,7 @@
 <mat-tab-group>
     <!-- Lista dei Dipendenti-->
-    <mat-tab label="Dipendenti">
-
+    <mat-tab label="Dipendenti" class="DipendentiList">
+        <div class="container">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
           
             <!-- Cf Column -->
@@ -37,18 +37,27 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
+          <mat-paginator length="dipendenti.length"
+              [pageSize]="pageSize"
+              [pageIndex]="pageIndex"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)="onPageChange($event)"
+              aria-label="Select page"
+          >
 
+          </mat-paginator>
+        </div>
     </mat-tab>
 
     <!--Orario dell'Admin-->
-    <mat-tab label="Il tuo Orario">
+    <mat-tab label="Il tuo Orario" class="AdminHours">
 
         <app-dipendente></app-dipendente>
 
     </mat-tab>
 
     <!--Orari di Tutti i Dipendenti-->
-    <mat-tab label="Orari Dipendenti">
+    <mat-tab label="Orari Dipendenti" class="DipendentiHours">
 
         <!--Input Nome-->
         <mat-form-field class="example-full-width">

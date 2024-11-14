@@ -1,20 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { UserService } from '../../core/service/user.service';
+import { DipendenteComponent } from '../dipendente/dipendente.component';
+import { toArray } from 'rxjs';
 
-export interface Dipendenti{
+
+export interface Dipendenti {
   cf: string;
   name: string;
   surname: string;
   daysoff: number;
   permits: number;
 }
-
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'
 })
 export class AdminComponent {
-  
     constructor() { }
     name: string="";
     surname: string="";
@@ -28,9 +32,32 @@ export class AdminComponent {
       {cf: "CF7", name: "Name7", surname: "Surname7", daysoff: 0, permits: 0},
       {cf: "CF8", name: "Name8", surname: "Surname8", daysoff: 0, permits: 0},
     ];
+    userService=inject(UserService);
+    users$=this.userService.allUsers;
 
     displayedColumns: string[] = ['cf', 'name', 'surname', 'daysoff', 'permits'];
-    dataSource = this.dipendenti;
+
+    //Paginator
+    pageSize=10;
+    pageIndex=0;
+    pageSizeOptions=[5,10,25,100];
+
+    dataSource = new MatTableDataSource<Dipendenti>(this.dipendenti);
+
+    ngOnInit(){
+      console.log(this.users$);
+    }
+
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+    ngAfterViewInit(){
+      this.dataSource.paginator = this.paginator;
+    }
+
+    onPageChange(event: any):void{
+      this.pageIndex = event.pageIndex;
+      this.pageSize = event.pageSize;
+    }
 
     filteredDipendente: any;
     isSearchPerformed: boolean = false;

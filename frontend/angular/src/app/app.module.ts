@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { provideHttpClient } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +12,7 @@ import { DipendenteComponent } from './features/dipendente/dipendente.component'
 import { HolidaysComponent } from './features/holidays/holidays.component';
 import { PermitsComponent } from './features/permits/permits.component';
 import { AdminComponent } from './features/admin/admin.component';
+import { HttpClient } from '@angular/common/http';
 
 
 @NgModule({
@@ -26,9 +28,8 @@ import { AdminComponent } from './features/admin/admin.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SharedModule
-
-  ],
+    SharedModule, 
+      ],
   exports: [
     SharedModule
 
@@ -36,6 +37,7 @@ import { AdminComponent } from './features/admin/admin.component';
   providers: [
     provideClientHydration(),
     provideAnimationsAsync(),
+    provideHttpClient(),
   ],
   bootstrap: [AppComponent]
 })

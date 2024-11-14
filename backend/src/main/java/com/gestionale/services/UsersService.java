@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UserDetailsService;
 //import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,14 +23,16 @@ import com.gestionale.repositories.UsersRepository;
 
 @Service
 //public class UsersService implements UserDetailsService {
-public class UsersService implements UserDetailsService {
+public class UsersService {
 	
 	private final UsersRepository usersRepository;
-	private final UserMapper usersMapper;
+//	private final UserMapper usersMapper;
+//	private PasswordEncoder passwordEncoder;
 	
-	public UsersService (UsersRepository usersRepository, UserMapper usersMapper) {
+	public UsersService (UsersRepository usersRepository) { //, UserMapper usersMapper, PasswordEncoder passwordEncoder
 		this.usersRepository = usersRepository;
-		this.usersMapper = usersMapper;
+//		this.usersMapper = usersMapper;
+//		this.passwordEncoder = passwordEncoder;
 	}
 	
 	// CRUD Operation
@@ -51,14 +54,14 @@ public class UsersService implements UserDetailsService {
 	}
 	
 	// metodo per Spring security di recupearare l'username (per noi sarà il codice fiscale, nello UserDto è username per questo motivo)
-	@Override
-	@Transactional(readOnly=true)
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return usersRepository.findByCf(username)
-				.map(usersMapper::toUserDto)
-				.orElseThrow(()-> new UsernameNotFoundException("User not found:" + username));
-	}
-	
+//	@Override
+//	@Transactional(readOnly=true)
+//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//		return usersRepository.findByCf(username)
+//				.map(usersMapper::toUserDto)
+//				.orElseThrow(()-> new UsernameNotFoundException("User not found:" + username));
+//	}
+//	
 	// create
 	
 	@Transactional(readOnly = false)
@@ -72,6 +75,7 @@ public class UsersService implements UserDetailsService {
 			String msg= "User's cf is not valid";
 			throw new Exception(msg);
 		}
+		//user.setPassword(passwordEncoder.encode(user.getPassword()));
 		usersRepository.save(user);
 		String msg= "User created successfully";
 		return msg;

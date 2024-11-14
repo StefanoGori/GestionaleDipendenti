@@ -10,7 +10,9 @@ import com.gestionale.entities.User;
 
 public interface UsersRepository extends JpaRepository<User, String> {
 	
-	Optional<User> findByCf(String cf);
+	@Query(value="select * from users u where cf= :cf", nativeQuery=true)
+	Optional<User> findByCf(@Param("cf")String cf);
+	
 	
 	@Query(value="select u.cf from users u where name= :nameInput and surname= :surnameInput", nativeQuery=true)
 	String findByNameAndSurname(@Param("nameInput") String name, @Param("surnameInput") String surname);

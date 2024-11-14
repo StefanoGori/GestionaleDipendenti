@@ -4,27 +4,32 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 //import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UserDetailsService;
 //import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.gestionale.dto.UserDto;
 //import com.gestionale.dto.UserDto;
 import com.gestionale.entities.User;
+import com.gestionale.mappers.UserMapper;
 //import com.gestionale.mappers.UserMapper;
 import com.gestionale.repositories.UsersRepository;
 
 
 @Service
 //public class UsersService implements UserDetailsService {
-public class UsersService {
+public class UsersService implements UserDetailsService {
 	
 	private final UsersRepository usersRepository;
-	//private final UserMapper usersMapper;
+	private final UserMapper usersMapper;
 	
-	public UsersService (UsersRepository usersRepository) {
+	public UsersService (UsersRepository usersRepository, UserMapper usersMapper) {
 		this.usersRepository = usersRepository;
-//		this.usersMapper = usersMapper;
+		this.usersMapper = usersMapper;
 	}
 	
 	// CRUD Operation
@@ -32,7 +37,7 @@ public class UsersService {
 	// Read All
 	@Transactional(readOnly=true)
     public List<User> findUsers() {
-        return usersRepository.findAll();    
+        return usersRepository.findAll();
     }
 	
 	// Read one by id
@@ -46,17 +51,17 @@ public class UsersService {
 	}
 	
 	// metodo per Spring security di recupearare l'username (per noi sarà il codice fiscale, nello UserDto è username per questo motivo)
-//	@Override
-//	@Transactional(readOnly=true)
-//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//		return usersRepository.findByCf(username)
-//				.map(usersMapper::toUserDto)
-//				.orElseThrow(()-> new UsernameNotFoundException("User not found:" + username));
-//	}
+	@Override
+	@Transactional(readOnly=true)
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		return usersRepository.findByCf(username)
+				.map(usersMapper::toUserDto)
+				.orElseThrow(()-> new UsernameNotFoundException("User not found:" + username));
+	}
 	
 	// create
 	
-	@Transactional
+	@Transactional(readOnly = false)
 	public String createUser(User user) throws Exception{
 		if(usersRepository.existsById(user.getCf())) {
 			String msg= "User already exists";

@@ -1,16 +1,21 @@
-<div class="container">
-    <p>Quante ore di permesso vuoi prendere?</p>
-        <mat-form-field class="example-form-field">
-          <mat-label>Ore di Permesso</mat-label>
-          <input matInput type="number" [(ngModel)]="SelectHours">
-          @if (SelectHours) {
-            <button matSuffix mat-icon-button aria-label="Clear" (click)="SelectHours=null">
-              <mat-icon>close</mat-icon>
-            </button>
-          }
-        </mat-form-field>
-    <div class="buttons">
-      <button mat-flat-button (click)="onConfirm()">Seleziona</button>
-      <button mat-flat-button (click)="onCancel() ">Annulla</button>
-    </div>
+<div class="modal-overlay">
+  <div class="modal-content">
+    <form [formGroup]="permitsForm">
+      <p>Quante ore di permesso vuoi prendere?</p>
+      <mat-form-field class="example-form-field">
+        <mat-label>Ore di Permesso</mat-label>
+        <input matInput type="number" formControlName="SelectHours">
+        @if(permitsForm.controls['SelectHours'].value) {
+          <button matSuffix mat-icon-button aria-label="Clear" (click)="this.permitsForm.get('SelectHours')?.setValue(null)">
+            <mat-icon>clear</mat-icon>
+          </button>
+        }
+      </mat-form-field>
+
+      <div class="buttons">
+        <button mat-flat-button [disabled]="!permitsForm.valid" (click)="onConfirm()">Seleziona</button>
+        <button mat-flat-button (click)="onCancel()">Annulla</button>
+      </div>
+    </form>
+  </div>
 </div>

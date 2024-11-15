@@ -7,13 +7,14 @@ import { PermitsComponent } from '../permits/permits.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TimeTableService } from '../../core/service/timetable.service';
+import { UserService } from '../../core/service/user.service';
 
 export interface timeTable{
   id: number;
   entrance : string;
   leaving : string; 
   day: string; 
-  holidays: boolean; 
+  holiday: boolean; 
   permits :number; 
   stamped_in :string; 
   stamped_out : string;
@@ -29,6 +30,7 @@ export class DipendenteComponent implements AfterViewInit{
 
   constructor(public dialog: MatDialog) { }
   timeTableService=inject(TimeTableService);
+  userService=inject(UserService);
   timeTable$=this.timeTableService.allTimeTables;
 
   //inizializzo il dataSource con tutti gli orari
@@ -43,7 +45,7 @@ export class DipendenteComponent implements AfterViewInit{
   
     // Tabella orari
     displayedColumns: string[] = ['day', 'schedule', 'entrance', 'leaving', 'holidays', 'permit'];
-    selectedRow: timeTable =  {id: 0, entrance : "", leaving : "", day: "", holidays : false, permits : 0 , stamped_in : "", stamped_out : ""};
+    selectedRow: timeTable =  {id: 0, entrance : "", leaving : "", day: "", holiday : false, permits : 0 , stamped_in : "", stamped_out : ""};
     
     
     //paginator
@@ -67,7 +69,9 @@ export class DipendenteComponent implements AfterViewInit{
       this.pageSize = event.pageSize;
     }
 
-
+    trackByRow(index: number,row: timeTable): number{
+      return row.id;
+    }
 
     // Bottoni di timbratura
     stampEntry(){
@@ -103,8 +107,8 @@ export class DipendenteComponent implements AfterViewInit{
 
       dialogRef.afterClosed().subscribe(result => {
         if(result === 'yes'){
-          this.selectedRow.holidays = true;
-          this.timeTableService.editHoliday(this.selectedRow.id, this.selectedRow.holidays);
+          this.selectedRow.holiday = true;
+          this.timeTableService.editHoliday(this.selectedRow.id, this.selectedRow.holiday);
           console.log("ferie aggiunte");
         }else{
             console.log("ferie non aggiunte");
@@ -115,7 +119,7 @@ export class DipendenteComponent implements AfterViewInit{
 
   onConfirm(): void{
     if (this.selectedRow) {
-      this.selectedRow.holidays = true;  // Modifica la proprietà delle ferie
+      this.selectedRow.holiday = true;  // Modifica la proprietà delle ferie
       console.log('Ferite aggiunte per il giorno: ', this.selectedRow.day);
     }
   }
@@ -136,6 +140,7 @@ openPermitsDialog(){
   dialogRef.afterClosed().subscribe(result => {
     if(result!==null && result!==undefined){
       this.selectedRow.permits = result;
+      this.timeTableService.editUsedpermits(this.selectedRow.id, this.selectedRow.permits);
       console.log("permessi aggiunti: ", this.selectedRow.permits);
     }else{
       console.log("permessi non aggiunti");

@@ -1,41 +1,41 @@
 <div class="flex-container">
   <div class="table-container">
     <!--Tabella Orari-->
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table" >
+    <table mat-table [dataSource]="(timeTable$ | async) || []" class="mat-elevation-z8 demo-table" >
       <!-- Day Column -->
       <ng-container matColumnDef="day">
         <th mat-header-cell *matHeaderCellDef>Day</th>
-        <td mat-cell *matCellDef="let orario" [ngClass]="{'holidaysActived' : orario.holidays}">{{orario.day}}</td>
+        <td mat-cell *matCellDef="let orario" [ngClass]="{'holidaysActived' : orario.holiday}">{{orario.day}}</td>
       </ng-container>
         
       <!-- Schedule Column -->
       <ng-container matColumnDef="schedule">
         <th mat-header-cell *matHeaderCellDef>Schedule</th>
-        <td mat-cell *matCellDef="let orario" [ngClass]="{'holidaysActived' : orario.holidays}"> {{orario.entrance}}/{{orario.leaving}}</td>
+        <td mat-cell *matCellDef="let orario" [ngClass]="{'holidaysActived' : orario.holiday}"> {{orario.entrance}}/{{orario.leaving}}</td>
       </ng-container>
           
       <!-- Entrance Column -->
       <ng-container matColumnDef="entrance">
         <th mat-header-cell *matHeaderCellDef>Entrance</th>
-        <td mat-cell *matCellDef="let orario" [ngClass]="{'holidaysActived' : orario.holidays}"> {{orario.holidays ? null : orario.stamped_in }} </td>
+        <td mat-cell *matCellDef="let orario" [ngClass]="{'holidaysActived' : orario.holiday}"> {{orario.holidays ? null : orario.stamped_in }} </td>
       </ng-container>
           
       <!-- Leaving Column -->
       <ng-container matColumnDef="leaving">
         <th mat-header-cell *matHeaderCellDef>Leaving</th>
-        <td mat-cell *matCellDef="let orario" [ngClass]="{'holidaysActived' : orario.holidays}"> {{orario.holidays ? null : orario.stamped_out }} </td>
+        <td mat-cell *matCellDef="let orario" [ngClass]="{'holidaysActived' : orario.holiday}"> {{orario.holidays ? null : orario.stamped_out }} </td>
       </ng-container>
         
       <!-- Holidays Column -->
       <ng-container matColumnDef="holidays" >
         <th mat-header-cell *matHeaderCellDef>Holidays</th>
-        <td mat-cell *matCellDef="let orario" [ngClass]="{'holidaysActived' : orario.holidays}"> {{orario.holidays ? "Actived" : '' }} </td>
+        <td mat-cell *matCellDef="let orario" [ngClass]="{'holidaysActived' : orario.holiday}"> {{orario.holidays ? "Actived" : '' }} </td>
       </ng-container>
         
       <!-- Permits Column -->
       <ng-container matColumnDef="permit">
         <th mat-header-cell *matHeaderCellDef>Permits</th>
-        <td mat-cell *matCellDef="let orario" [ngClass]="{'holidaysActived' : orario.holidays}"> {{orario.permits ? orario.permits : '' }} </td>
+        <td mat-cell *matCellDef="let orario" [ngClass]="{'holidaysActived' : orario.holiday}"> {{orario.permits ? orario.permits : '' }} </td>
       </ng-container>
             
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -43,8 +43,7 @@
         mat-row
         (click)="selectedRow=row"
         [class.demo-row-is-clicked]="selectedRow===row"
-        *matRowDef="let row; columns: displayedColumns;"
-      ></tr>
+        *matRowDef="let row; columns: displayedColumns"></tr>
       
       
     </table>
@@ -88,7 +87,7 @@
         </mat-card-header>
         <mat-card-content>
           <div class="content-card">
-            <p>{{ selectedRow.holidays ? 'Ferie' : ( "Your Schedule: " + selectedRow.entrance + "/" + selectedRow.leaving)}}</p>
+            <p>{{ selectedRow.holiday ? 'Ferie' : ( "Your Schedule: " + selectedRow.entrance + "/" + selectedRow.leaving)}}</p>
             @if(selectedRow.permits){  
               <p> Ore permesso usate {{selectedRow.permits}}</p>
             }

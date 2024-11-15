@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gestionale.dto.GenericResponseDto;
 import com.gestionale.entities.Timetable;
 import com.gestionale.services.TimetablesService;
 
@@ -69,12 +70,12 @@ public class TimetableController {
 	
 	// modifica ma bisogna mandargli tutto l'user
 	@PutMapping("edit")
-	public ResponseEntity<String> editTimetable(@RequestBody Timetable time) throws Exception{
+	public ResponseEntity<GenericResponseDto> editTimetable(@RequestBody Timetable time) throws Exception{
 		try {
 			String msg= timeService.updateTimetable(time);
-			return new ResponseEntity<>(msg, HttpStatus.OK);	
+			return new ResponseEntity<>(new GenericResponseDto(msg), HttpStatus.OK);	
 		} catch (Exception e){
-    		return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT); 
+    		return new ResponseEntity<>(new GenericResponseDto(e.getMessage()), HttpStatus.CONFLICT); 
     	}
 	}
 	

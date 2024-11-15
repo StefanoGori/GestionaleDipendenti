@@ -27,7 +27,7 @@ export class HttpService {
 
     deleteUser(cf:string){
         const headers = { responseType:"text"}
-        return this.httpClient.delete<User>(`http://localhost:8050/management/employees/${cf}`, {'headers':headers});
+        return this.httpClient.delete<string>(`http://localhost:8050/management/employees/delete/${cf}`, {'headers':headers});
     }
 
     editUser(user:User){

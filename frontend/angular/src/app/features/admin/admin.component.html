@@ -1,10 +1,11 @@
+<app-navbar></app-navbar>
 <div class="container">
   <mat-tab-group>
       <!-- Lista dei Dipendenti-->
       <mat-tab label="Dipendenti" class="DipendentiList">
         @if(!currentDipendente){
           <div class="container">
-          <table mat-table [dataSource]="(users$ | async) || [] " class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource " class="mat-elevation-z8">
             
               <!-- Cf Column -->
               <ng-container matColumnDef="cf">

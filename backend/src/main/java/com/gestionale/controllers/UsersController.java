@@ -67,8 +67,8 @@ public class UsersController {
     		}
     }
     
-    @DeleteMapping("delete/{cf}")
-    public  ResponseEntity<String> deleteUser(@PathVariable("cf") String cf) throws Exception{
+    @DeleteMapping(path= "delete/{cf}", produces= MediaType.TEXT_PLAIN_VALUE)
+    public  ResponseEntity<String> deleteUser(@PathVariable String cf) throws Exception{
     	try {
     		String msg = usersService.deleteUser(cf);
     		return new ResponseEntity<>(msg, HttpStatus.OK);    		

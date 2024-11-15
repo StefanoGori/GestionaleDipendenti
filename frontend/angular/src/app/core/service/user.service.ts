@@ -90,7 +90,11 @@ export class UserService {
           users=users.filter((user)=>user.cf.toUpperCase()!==cf.toUpperCase());
           this.users$.next(users);
         },
-        error:(err)=>{console.log(err);}
+        error:(err)=>{
+          // let users=this.users$.getValue();
+          // users=users.filter((user)=>user.cf.toUpperCase()!==cf.toUpperCase());
+          // this.users$.next(users);
+          console.log(err);}
       });
     }
 

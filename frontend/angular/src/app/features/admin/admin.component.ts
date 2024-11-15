@@ -29,24 +29,23 @@ export class AdminComponent {
 
     currentDipendente : null | string= null;
     
+
     displayedColumns: string[] = ['cf', 'name', 'surname', 'daysoff', 'permits', 'edit'];
 
     //Paginator
-    pageSize=5;
+    pageSize=10;
     pageIndex=0;
     pageSizeOptions=[5,10,25,100];
 
     dataSource = new MatTableDataSource();
     ngOnInit(){
-      this.users$.pipe(toArray()).subscribe({
-        next: (users)=>{
-          this.dataSource.data=users;
-          this.dataSource.paginator = this.paginator;
+      this.users$.subscribe({
+        next: (value)=>{
+          this.dataSource.data=value
         },
       });
     }
 
-    
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
     ngAfterViewInit(){

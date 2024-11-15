@@ -15,6 +15,7 @@ import { PermitsComponent } from './features/permits/permits.component';
 import { AdminComponent } from './features/admin/admin.component';
 import { ModalNewUserComponent } from './features/modal-new-user/modal-new-user.component';
 import { DeleteDipendenteComponent } from './features/delete-dipendente/delete-dipendente.component';
+import { ScheduleModalComponent } from './features/schedule-modal/schedule-modal.component';
 
 
 
@@ -29,6 +30,7 @@ import { DeleteDipendenteComponent } from './features/delete-dipendente/delete-d
     AdminComponent,
     ModalNewUserComponent,
     DeleteDipendenteComponent,
+    ScheduleModalComponent,
     
     
   ],

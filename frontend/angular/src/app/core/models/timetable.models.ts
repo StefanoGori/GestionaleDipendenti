@@ -7,7 +7,7 @@ export interface TimeTable{
     leaving: string;
     stamped_in?: string;
     stamped_out?: string;
-    holiday: boolean;
+    holiday?: boolean;
     usedpermits:number;
     user: User;
 }

@@ -48,7 +48,8 @@ export class HttpService {
     }
 
     addTimeTable(cf:string, timeTable: TimeTable){
-        return this.httpClient.post<TimeTable>('http://localhost:8050/management/timetables/add/'+cf, timeTable);
+        const headers = {"content-type" : "application/json", responseType:"json"}
+        return this.httpClient.post<TimeTable>('http://localhost:8050/management/timetables/add/'+cf, timeTable,{'headers':headers} );
     }
 
     editTimeTable(timeTable: TimeTable){

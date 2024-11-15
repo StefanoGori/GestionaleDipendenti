@@ -15,9 +15,10 @@ import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/cor
 export class ModalNewUserComponent {
   dialogRef= inject(MatDialogRef);
   userService = inject(UserService);
+  user : User | null = null;
 
   formModal= new FormGroup({
-    cf : new FormControl('', [Validators.required, Validators.minLength(16), Validators.maxLength(16)]),
+    cf : new FormControl(this.user?.cf, [Validators.required, Validators.minLength(16), Validators.maxLength(16)]),
     name : new FormControl('', [Validators.required]),
     surname : new FormControl('',  [Validators.required]),
     admin : new FormControl(false, []),
@@ -29,7 +30,9 @@ export class ModalNewUserComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: {user: User}) {
     if(data?.user) {
+      this.user = data.user;
       this.formModal.patchValue(data.user);
+
     }
   }
 

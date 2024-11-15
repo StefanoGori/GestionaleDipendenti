@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import { TimeTable } from '../models/timetable.models';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, map, of } from 'rxjs';
 import {HttpService} from './http.service';
 import { User } from '../models/user.models';
 import { time } from 'console';
@@ -45,33 +45,25 @@ export class TimeTableService {
     }
 
     getTimeTableByUserCf(cf: string){
+        console.log("cf"+ cf)
         return this.timeTables$.pipe(
             map(timeTables=>{
                 const timeTable=timeTables.find((timeTable)=>timeTable.user.cf===cf);
                 if(!timeTable){
                     throw new Error("Orario non trovato");
                 }
-                return timeTable;
+                return of (timeTable);
             })
         );
     }
 
-    addTimeTable(id:number, day:string, entrance:string, leaving:string, stamped_in:string, stamped_out:string, holiday:boolean, usedpermits:number, user:User){
-        const timeTable = {
-            id: id,
-            day: day,
-            entrance: entrance,
-            leaving: leaving,
-            stamped_in: stamped_in,
-            stamped_out: stamped_out,
-            holiday: holiday,
-            usedpermits: usedpermits,
-            user: user
-        }
-        this.httpService.addTimeTable(user.cf, timeTable).subscribe({
+    addTimeTable(timetable : TimeTable, user : User){
+        console.log(timetable)
+        console.log(user)
+    this.httpService.addTimeTable(user.cf, timetable).subscribe({
             next: ()=>{
                 let timeTables = this.timeTables$.getValue();
-                timeTables.push(timeTable);
+                timeTables.push(timetable);
                 this.timeTables$.next(timeTables);
             },
             error: (error)=>{

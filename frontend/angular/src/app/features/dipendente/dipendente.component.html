@@ -1,7 +1,7 @@
 <div class="flex-container">
   <div class="table-container">
     <!--Tabella Orari-->
-    <table mat-table [dataSource]="(timeTable$ | async) || []" class="mat-elevation-z8 demo-table" >
+    <table mat-table [dataSource]="(dataSource)" class="mat-elevation-z8 demo-table" >
       <!-- Day Column -->
       <ng-container matColumnDef="day">
         <th mat-header-cell *matHeaderCellDef>Day</th>

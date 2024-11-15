@@ -16,6 +16,7 @@ table{
     align-items: center;
 }
 
-button{
+.back{ 
+    margin: 20px;
     
 }

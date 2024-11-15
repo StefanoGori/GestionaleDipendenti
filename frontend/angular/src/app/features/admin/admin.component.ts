@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteDipendenteComponent } from '../delete-dipendente/delete-dipendente.component';
 import { TimeTableService } from '../../core/service/timetable.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ScheduleModalComponent } from '../schedule-modal/schedule-modal.component';
 
 
 @Component({
@@ -24,35 +25,28 @@ export class AdminComponent {
     userService=inject(UserService);
     timeTableService=inject(TimeTableService);
     users$=this.userService.allUsers;
+    currentUser: null | User =null;
+
+    currentDipendente : null | string= null;
     
-    // prova singola barra di ricerca
-    // searchTerm$ = new BehaviorSubject<string | null>('');
-    // formSearch= new FormGroup({search: new FormControl<string>('')});
-
-    // usersRicercati$ = this.searchTerm$.pipe(
-    //   combineLatestWith(this.userService.allUsers),
-    //   map(([value,usersRicercati,]) => {
-    //     console.log(this.searchTerm$.value)
-    //     return value ? usersRicercati.filter(col => col.name.toLowerCase().includes(value)) : usersRicercati
-    //   })
-    // );
-
     displayedColumns: string[] = ['cf', 'name', 'surname', 'daysoff', 'permits', 'edit'];
 
     //Paginator
-    pageSize=10;
+    pageSize=5;
     pageIndex=0;
     pageSizeOptions=[5,10,25,100];
 
     dataSource = new MatTableDataSource();
     ngOnInit(){
-      this.users$.subscribe({
-        next: (value)=>{
-          this.dataSource.data=value
+      this.users$.pipe(toArray()).subscribe({
+        next: (users)=>{
+          this.dataSource.data=users;
+          this.dataSource.paginator = this.paginator;
         },
       });
     }
 
+    
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
     ngAfterViewInit(){
@@ -80,14 +74,14 @@ export class AdminComponent {
     //   console.log(this.filteredDipendente);
     // }
 
-    searchDipendente(inputname:string, inputsurname:string){
-      this.isSearchPerformed = true;
-      this.filteredDipendente = this.users$.pipe(
-        map(users => users.filter((user)=>
-          user.name?.toLowerCase().includes(inputname.toLowerCase()) && 
-          user.surname?.toLowerCase().includes(inputsurname.toLowerCase())
-      )));
-    }
+    // searchDipendente(inputname:string, inputsurname:string){
+    //   this.isSearchPerformed = true;
+    //   this.filteredDipendente = this.users$.pipe(
+    //     map(users => users.filter((user)=>
+    //       user.name?.toLowerCase().includes(inputname.toLowerCase()) && 
+    //       user.surname?.toLowerCase().includes(inputsurname.toLowerCase())
+    //   )));
+    // }
 
     resetSearch(){
       this.isSearchPerformed = false;
@@ -125,5 +119,34 @@ export class AdminComponent {
       dialogRef.afterClosed().subscribe({
         next: (result) => result ? this.userService.deleteUser(cf) : null,
       });
+    }
+
+    ShowScheduleDipendente(user: User){
+      console.log(user)
+      this.currentDipendente=user.cf;
+
+    }
+
+    back(){
+      this.currentDipendente=null;
+    }
+
+    addSchedule(cf :string){
+      
+      this.userService.getUser(cf).subscribe(
+        (value) => {
+          this.currentUser=value;
+          this.dialog.open(ScheduleModalComponent,{
+            width: '900px',
+            height: 'auto',
+            data: value
+          }).afterClosed().subscribe({
+            next: (result) => result ? this.timeTableService.addTimeTable(result, value) : null,
+          });
+
+        }
+      );
+
+      
     }
 }

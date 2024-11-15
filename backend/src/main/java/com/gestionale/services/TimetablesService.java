@@ -45,7 +45,6 @@ public class TimetablesService {
 		@Transactional
 		public List<Timetable> findTimetableByUser(String name, String surname) throws Exception{
 			String cf = userRepository.findByNameAndSurname(name, surname);
-			System.out.println(cf);
 			if(!userRepository.existsById(cf)) {
 				String msg= "User not exist";
 				throw new Exception(msg);
@@ -104,7 +103,6 @@ public class TimetablesService {
 			throw new Exception(msg);
 		} else {
 			String cf = timeRepository.findById(time.getId()).get().getUser().getCf();
-			System.out.println(cf);	
 			if(timeRepository.existByDayAndUserIdAndIdTimetable(time.getDay(), cf , time.getId())==1) {
 				String msg= "The user has alredy a timetable for this day";
 				throw new Exception(msg);	

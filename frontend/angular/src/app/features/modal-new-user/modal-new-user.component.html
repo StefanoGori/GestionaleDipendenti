@@ -6,7 +6,7 @@
         <!-- Input CF-->
         <mat-form-field class="example-full-width">
             <mat-label>Tax Code</mat-label>
-            <input matInput placeholder="Enter User's Tax Code" [formControl]="formModal.controls.cf" [value]="formModal.controls.cf.value">
+            <input matInput placeholder="Enter User's Tax Code" formControlName="cf">
             @if (formModal.controls.cf.hasError('minLength') || formModal.controls.cf.hasError('maxLength')) {
                 <mat-error>Please enter a Tax Code of 16 character</mat-error>
             }

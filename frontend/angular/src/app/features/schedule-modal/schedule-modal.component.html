@@ -1,0 +1,40 @@
+<div class="modal">
+    <div class="modal-body">
+    <!--Form Modale-->
+    <form class="example-form" [formGroup]="formModalSchedule">
+        
+        <!-- Input Day-->
+        <mat-form-field class="example-full-width">
+            <mat-label>Day</mat-label>
+            <input type="date" matInput [formControl]="formModalSchedule.controls.day">
+            @if(formModalSchedule.controls.day.hasError('required')) {
+                <mat-error>Day is <strong>required</strong></mat-error>
+            }
+        </mat-form-field>
+        <!-- Input Entrance-->
+        <mat-form-field class="example-full-width">
+            <mat-label>Entrance</mat-label>
+            <input type="time" matInput placeholder="Enter User's Tax Code" [formControl]="formModalSchedule.controls.entrance">
+            @if(formModalSchedule.controls.entrance.hasError('required')) {
+                <mat-error>Entrance is <strong>required</strong></mat-error>
+            }
+        </mat-form-field>
+        <!-- Input Leaving-->
+        <mat-form-field class="example-full-width">
+            <mat-label>Leaving</mat-label>
+            <input type="time" matInput placeholder="Enter User's Tax Code" [formControl]="formModalSchedule.controls.leaving">
+            @if(formModalSchedule.controls.leaving.hasError('required')) {
+                <mat-error>Leaving is <strong>required</strong></mat-error>
+            }
+        </mat-form-field>
+    </form>
+    </div>
+    <div class="modal-footer">
+    <div class="example-button-row">
+        <button mat-flat-button type="submit" [disabled]="!formModalSchedule.valid" (click)="onSubmit()" >Add Schedule Employee</button>
+    </div>
+    <div class="example-button-row">
+        <button mat-stroked-button (click)="closeModal()" >Chiudi</button>
+    </div>
+    </div>
+</div>

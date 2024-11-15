@@ -14,6 +14,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatCardModule} from '@angular/material/card';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MatDialogActions, MatDialogContent } from '@angular/material/dialog';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+
 
 
 
@@ -37,7 +39,8 @@ import { MatDialogActions, MatDialogContent } from '@angular/material/dialog';
     MatCardModule,
     MatSlideToggleModule,
     MatDialogContent,
-    MatDialogActions
+    MatDialogActions,
+    MatDatepickerModule
   ],
   exports: [
     MatToolbarModule,
@@ -54,7 +57,8 @@ import { MatDialogActions, MatDialogContent } from '@angular/material/dialog';
     MatCardModule,
     MatSlideToggleModule,
     MatDialogContent,
-    MatDialogActions
+    MatDialogActions,
+    MatDatepickerModule
   ],
 })
 export class MaterialModule { }

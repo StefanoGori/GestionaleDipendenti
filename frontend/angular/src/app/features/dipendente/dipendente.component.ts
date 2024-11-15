@@ -1,5 +1,5 @@
-import { Component, ViewChild, AfterViewInit, inject } from '@angular/core';
-import { timestamp } from 'rxjs';
+import { Component, ViewChild, AfterViewInit, inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { switchMap, takeUntil, timestamp, toArray } from 'rxjs';
 import { format } from 'date-fns';
 import { MatDialog } from '@angular/material/dialog';
 import { HolidaysComponent } from '../holidays/holidays.component';
@@ -9,7 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { TimeTableService } from '../../core/service/timetable.service';
 import { UserService } from '../../core/service/user.service';
 
-export interface timeTable{
+export interface timeTableRow{
   id: number;
   entrance : string;
   leaving : string; 
@@ -26,26 +26,36 @@ export interface timeTable{
   templateUrl: './dipendente.component.html',
   styleUrl: './dipendente.component.css'
 })
-export class DipendenteComponent implements AfterViewInit{
+export class DipendenteComponent implements AfterViewInit, OnChanges{
+  @Input() cf : string = "";
+  constructor(public dialog: MatDialog) { 
+  }
 
-  constructor(public dialog: MatDialog) { }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes)
+  }
   timeTableService=inject(TimeTableService);
   userService=inject(UserService);
-  timeTable$=this.timeTableService.allTimeTables;
+  
 
   //inizializzo il dataSource con tutti gli orari
   dataSource=new MatTableDataSource();
+  
+
   ngOnInit(){
-    this.timeTable$.subscribe({
-      next: (value)=>{
-        this.dataSource.data=value;
-      }, error: (error)=> console.error("Errore:",error)
-    });
+   this.timeTableService.getTimeTableByUserCf(this.cf).pipe(switchMap((value) => {
+     return value;
+   })).subscribe({
+    next: (value)=>{
+      this.dataSource.data=[value];
+      console.log("dataSource"+this.dataSource.data)
+    }, error: (error)=> console.error("Errore:",error)
+  });
   }
   
     // Tabella orari
     displayedColumns: string[] = ['day', 'schedule', 'entrance', 'leaving', 'holidays', 'permit'];
-    selectedRow: timeTable =  {id: 0, entrance : "", leaving : "", day: "", holiday : false, permits : 0 , stamped_in : "", stamped_out : ""};
+    selectedRow: timeTableRow =  {id: 0, entrance : "", leaving : "", day: "", holiday : false, permits : 0 , stamped_in : "", stamped_out : ""};
     
     
     //paginator
@@ -69,7 +79,7 @@ export class DipendenteComponent implements AfterViewInit{
       this.pageSize = event.pageSize;
     }
 
-    trackByRow(index: number,row: timeTable): number{
+    trackByRow(index: number,row: timeTableRow): number{
       return row.id;
     }
 

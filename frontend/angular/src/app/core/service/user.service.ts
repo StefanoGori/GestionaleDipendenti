@@ -40,6 +40,20 @@ export class UserService {
       
     // }
 
+    getUser(cf:string){
+      return this.users$.pipe(
+        map(users=>{
+            const user=users.find((user)=>user.cf===cf);
+            if(!user){
+                throw new Error("Orario non trovato");
+            } else {
+              return user;
+            } 
+          }
+      )
+    )
+    }
+
     addUser(user : User){
       this.httpService.addUser(user).subscribe({
         next : () => {
@@ -55,11 +69,14 @@ export class UserService {
     }
 
     editUser(newuser : User){
+      console.log(newuser);
       const saveState = this.users$.getValue();
-      if(saveState.find((user)=>user.cf.toUpperCase()===newuser.cf.toLocaleUpperCase())){
-      const userIndex=saveState.findIndex((user)=>user.cf===newuser.cf);
-      saveState[userIndex] = { ...newuser}
-      this.users$.next([... saveState])
+      if(saveState.find((user)=>user.cf.toUpperCase()===newuser.cf.toUpperCase())){
+      const userIndex=saveState.findIndex((user)=>user.cf.toUpperCase()===newuser.cf.toUpperCase());
+      saveState[userIndex] = {...newuser}
+      
+      this.users$.next([...saveState])
+      console.log(this.users$.next([...saveState]));
       this._snackBar.open("User modify successfully!", "", {horizontalPosition : "center", verticalPosition : "top", duration : 2000});
       } else {
         this._snackBar.open("Error: the user don't exist!", "", {horizontalPosition : "center", verticalPosition : "top", duration : 2000});

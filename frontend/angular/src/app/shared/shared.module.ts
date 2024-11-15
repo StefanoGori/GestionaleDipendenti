@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTabsModule } from '@angular/material/tabs';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -20,7 +21,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatSelectModule,
     FormsModule,
     MatPaginatorModule,
-    MatTabsModule
+    MatTabsModule,
+    ReactiveFormsModule
 
   ],
   exports: [
@@ -29,7 +31,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatSelectModule,
     FormsModule,
     MatPaginatorModule,
-    MatTabsModule
+    MatTabsModule,
+    ReactiveFormsModule
   ],
 })
 export class SharedModule { }

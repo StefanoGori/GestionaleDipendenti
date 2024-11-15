@@ -1,7 +1,7 @@
 <div class="flex-container">
   <div class="table-container">
     <!--Tabella Orari-->
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table" >
+    <table mat-table [dataSource]="(timeTable$ | async) || []" class="mat-elevation-z8 demo-table" >
       <!-- Day Column -->
       <ng-container matColumnDef="day">
         <th mat-header-cell *matHeaderCellDef>Day</th>
@@ -43,8 +43,7 @@
         mat-row
         (click)="selectedRow=row"
         [class.demo-row-is-clicked]="selectedRow===row"
-        *matRowDef="let row; columns: displayedColumns;"
-      ></tr>
+        *matRowDef="let row; columns: displayedColumns"></tr>
       
       
     </table>
@@ -88,7 +87,7 @@
         </mat-card-header>
         <mat-card-content>
           <div class="content-card">
-            <p>{{ selectedRow.holidays ? 'Ferie' : ( "Your Schedule: " + selectedRow.entrance + "/" + selectedRow.leaving)}}</p>
+            <p>{{ selectedRow.holiday ? 'Ferie' : ( "Your Schedule: " + selectedRow.entrance + "/" + selectedRow.leaving)}}</p>
             @if(selectedRow.permits){  
               <p> Ore permesso usate {{selectedRow.permits}}</p>
             }

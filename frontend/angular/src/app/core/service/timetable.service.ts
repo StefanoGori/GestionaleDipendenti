@@ -3,12 +3,14 @@ import { TimeTable } from '../models/timetable.models';
 import { BehaviorSubject, map } from 'rxjs';
 import {HttpService} from './http.service';
 import { User } from '../models/user.models';
+import { time } from 'console';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TimeTableService {
     private timeTables$ = new BehaviorSubject<TimeTable[]>([]);
+    private users$= new BehaviorSubject<User[]>([]);
     httpService: HttpService = inject(HttpService);
 
     constructor() {
@@ -158,6 +160,28 @@ export class TimeTableService {
             throw new Error("Orario non trovato");
         }
         timeTables[timeTableIndex].holiday = newHoliday;
+        this.httpService.editTimeTable(timeTables[timeTableIndex]).subscribe({
+            next: ()=>{
+                this.timeTables$.next(timeTables);
+            },
+            error: (error)=>{
+                console.log(error);
+            }
+        });
+    }
+
+    editUsedpermits(id: number, newUsedpermits: number){
+        let timeTables = this.timeTables$.getValue();
+        const timeTableIndex = timeTables.findIndex((timeTable)=>timeTable.id===id);
+        if(timeTableIndex==-1){
+            throw new Error("Orario non trovato");
+        }
+        const user = timeTables[timeTableIndex].user;
+        const permits = user.permits;
+        if(timeTables[timeTableIndex].usedpermits+newUsedpermits>permits){
+            throw new Error("Permessi insufficienti");
+        }
+        timeTables[timeTableIndex].usedpermits += newUsedpermits;
         this.httpService.editTimeTable(timeTables[timeTableIndex]).subscribe({
             next: ()=>{
                 this.timeTables$.next(timeTables);

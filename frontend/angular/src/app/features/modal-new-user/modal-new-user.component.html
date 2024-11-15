@@ -1,0 +1,64 @@
+<div class="modal">
+    <div class="modal-body">
+    <!--Form Modale-->
+    <form class="example-form" [formGroup]="formModal" (ngSubmit)="onSubmit()">
+        
+        <!-- Input CF-->
+        <mat-form-field class="example-full-width">
+            <mat-label>Tax Code</mat-label>
+            <input matInput placeholder="Enter User's Tax Code" [formControl]="formModal.controls.cf" [value]="formModal.controls.cf.value">
+            @if (formModal.controls.cf.hasError('minLength') || formModal.controls.cf.hasError('maxLength')) {
+                <mat-error>Please enter a Tax Code of 16 character</mat-error>
+            }
+            @if(formModal.controls.cf.hasError('required')) {
+                <mat-error>Tax code is <strong>required</strong></mat-error>
+            }
+        </mat-form-field>
+        <!--Input nome-->
+        <mat-form-field class="example-full-width">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Enter User's Name" [formControl]="formModal.controls.name">
+            @if(formModal.controls.name.hasError('required')) {
+                <mat-error>Name is <strong>required</strong></mat-error>
+            }
+        </mat-form-field>
+        <!--Input Cognome-->
+        <mat-form-field class="example-full-width">
+            <mat-label>Surname</mat-label>
+            <input matInput placeholder="Enter User's Surname" [formControl]="formModal.controls.surname" [value]="formModal.controls.surname.value">
+            @if(formModal.controls.surname.hasError('required')) {
+                <mat-error>Surname is <strong>required</strong></mat-error>
+            }
+        </mat-form-field>
+        <!--Input Admin Toggle-->
+        <p><mat-slide-toggle labelPosition="before" [formControl]="formModal.controls.admin"> Is an Admin?</mat-slide-toggle></p>
+        <!--Input holidays-->
+        <mat-form-field class="example-full-width">
+            <mat-label>Day of Holidays</mat-label>
+            <input input type="number" min="0" matInput placeholder="Enter User's day Holidays" [formControl]="formModal.controls.holidays">
+        </mat-form-field>
+        <!--Input permits-->
+        <mat-form-field class="example-full-width">
+            <mat-label>Hour of Permits</mat-label>
+            <input type="number" min="0" matInput placeholder="Enter User's hours permits" [formControl]="formModal.controls.permits">
+        </mat-form-field>
+        <!--Input password-->
+        <mat-form-field class="example-full-width">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Enter User's password" [formControl]="formModal.controls.password">
+            @if(formModal.controls.password.hasError('required')) {
+                <mat-error>Password is <strong>required</strong></mat-error>
+            }
+        </mat-form-field>
+        <!-- Bottone invia-->
+    </form>
+    </div>
+    <div class="modal-footer">
+    <div class="example-button-row">
+        <button mat-flat-button type="submit" [disabled]="!formModal.valid" (click)="onSubmit()">Aggiungi Developer</button>
+    </div>
+    <div class="example-button-row">
+        <button mat-stroked-button (click)="closeModal()" >Chiudi</button>
+    </div>
+    </div>
+</div>

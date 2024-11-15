@@ -3,13 +3,13 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { UserService } from '../../core/service/user.service';
 import { DipendenteComponent } from '../dipendente/dipendente.component';
-import { async, filter, toArray } from 'rxjs';
+import { async, BehaviorSubject, combineLatestWith, filter, map, toArray } from 'rxjs';
 import { User } from '../../core/models/user.models';
-import { AddDipendenteComponent } from '../add-dipendente/add-dipendente.component';
+import { ModalNewUserComponent } from '../modal-new-user/modal-new-user.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDipendenteComponent } from '../delete-dipendente/delete-dipendente.component';
-import { EditDipendenteComponent } from '../edit-dipendente/edit-dipendente.component';
 import { TimeTableService } from '../../core/service/timetable.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -19,25 +19,38 @@ import { TimeTableService } from '../../core/service/timetable.service';
 })
 export class AdminComponent {
     constructor(public dialog: MatDialog) { }
-    name: string="";
-    surname: string="";
+    inputname: string="";
+    inputsurname: string="";
     userService=inject(UserService);
     timeTableService=inject(TimeTableService);
     users$=this.userService.allUsers;
+    
+    // prova singola barra di ricerca
+    // searchTerm$ = new BehaviorSubject<string | null>('');
+    // formSearch= new FormGroup({search: new FormControl<string>('')});
+
+    // usersRicercati$ = this.searchTerm$.pipe(
+    //   combineLatestWith(this.userService.allUsers),
+    //   map(([value,usersRicercati,]) => {
+    //     console.log(this.searchTerm$.value)
+    //     return value ? usersRicercati.filter(col => col.name.toLowerCase().includes(value)) : usersRicercati
+    //   })
+    // );
 
     displayedColumns: string[] = ['cf', 'name', 'surname', 'daysoff', 'permits', 'edit'];
 
     //Paginator
-    pageSize=3;
+    pageSize=10;
     pageIndex=0;
     pageSizeOptions=[5,10,25,100];
 
     dataSource = new MatTableDataSource();
     ngOnInit(){
       this.users$.subscribe({
-        next: (value)=>{this.dataSource.data=value}
+        next: (value)=>{
+          this.dataSource.data=value
+        },
       });
-   
     }
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -68,10 +81,12 @@ export class AdminComponent {
     // }
 
     searchDipendente(name:string, surname:string){
-      // this.isSearchPerformed = true;
-      // this.filteredDipendente = this.users$.pipe(
-      //   filter((user:User)=>user.name.toLowerCase()===name.toLowerCase() && user.surname.toLowerCase()===surname.toLowerCase())
-      // )
+      this.isSearchPerformed = true;
+      this.filteredDipendente = this.users$.pipe(
+        map(users => users.filter((user)=>
+          user.name?.toLowerCase().includes(this.inputname.toLowerCase()) && 
+          user.surname?.toLowerCase().includes(this.inputsurname.toLowerCase())
+      )));
     }
 
     resetSearch(){
@@ -79,30 +94,36 @@ export class AdminComponent {
     }
 
     //aggiunta dipendente
-    openAddDipendente(){
-      const dialogRef=this.dialog.open(AddDipendenteComponent,{
-        width: '500px',
-        height: '250px'
+    AddDipendente(){
+      const dialogRef=this.dialog.open(ModalNewUserComponent,{
+        width: '900px',
+        height: 'auto'
       });
-      dialogRef.afterClosed().subscribe(result=>{
+      dialogRef.afterClosed().subscribe({
+        next: (result) => result ? this.userService.addUser(result) : null,
       });
     }
 
-    openDeleteDipendente(){
+    // modificare un dipendente
+    EditDipendente(user : User){
+      const dialogRef=this.dialog.open(ModalNewUserComponent,{
+        width: '900px',
+        height: 'auto',
+        data: user
+      });
+      dialogRef.afterClosed().subscribe({
+        next: (result) => result ? this.userService.editUser(result) : null,
+      });
+    }   
+
+    //eliminare un dipendente
+    DeleteDipendente(cf : string){
       const dialogRef=this.dialog.open(DeleteDipendenteComponent,{
         width: '500px',
         height: '250px'
       });
-      dialogRef.afterClosed().subscribe(result=>{
-      });
-    }
-
-    openEditDipendente(){
-      const dialogRef=this.dialog.open(EditDipendenteComponent,{
-        width: '500px',
-        height: '250px'
-      });
-      dialogRef.afterClosed().subscribe(result=>{
+      dialogRef.afterClosed().subscribe({
+        next: (result) => result ? this.userService.deleteUser(cf) : null,
       });
     }
 }

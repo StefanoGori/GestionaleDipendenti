@@ -1,0 +1,13 @@
+.delete-modal{
+    padding: 10px;
+}
+
+h2 {
+    color: red;
+}
+
+.mat-mdc-button:not(:disabled) {
+    color: red;
+    text-decoration: none;
+}
+

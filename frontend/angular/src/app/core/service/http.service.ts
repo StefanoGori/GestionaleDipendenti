@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { User } from '../models/user.models';
 import { TimeTable } from '../models/timetable.models';
 import {text} from 'express';
@@ -21,7 +21,8 @@ export class HttpService {
     }
 
     addUser(user:User){
-        return this.httpClient.post<User>('http://localhost:8050/management/employees/add', user);
+        const headers = {"content-type" : "application/json", responseType:"json"}
+        return this.httpClient.post<User>('http://localhost:8050/management/employees/add', user, {'headers':headers});
     }
 
     deleteUser(cf:string){

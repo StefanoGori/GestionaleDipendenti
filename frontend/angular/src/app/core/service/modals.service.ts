@@ -10,9 +10,9 @@ export class ModalsService {
 
   openModal(component: ComponentType<unknown>, data:any=null){
     return this.#dialogService.open(component, {
-      width: '500px',
+      width: '900px',
       height: 'auto',
-      data: data,
+      data
     }).afterClosed();
   }
   constructor() { }

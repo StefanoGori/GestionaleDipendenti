@@ -37,7 +37,6 @@ export class DipendenteComponent implements AfterViewInit{
     this.timeTable$.subscribe({
       next: (value)=>{
         this.dataSource.data=value;
-        console.log(this.dataSource.data);
       }, error: (error)=> console.error("Errore:",error)
     });
   }

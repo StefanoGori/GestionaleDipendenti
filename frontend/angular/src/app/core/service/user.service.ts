@@ -55,14 +55,14 @@ export class UserService {
     }
 
     editUser(newuser : User){
-      const saveState = [...this.users$.getValue()];
-      if(saveState.find((user)=>user.cf===newuser.cf)){
+      const saveState = this.users$.getValue();
+      if(saveState.find((user)=>user.cf.toUpperCase()===newuser.cf.toLocaleUpperCase())){
       const userIndex=saveState.findIndex((user)=>user.cf===newuser.cf);
       saveState[userIndex] = { ...newuser}
       this.users$.next([... saveState])
       this._snackBar.open("User modify successfully!", "", {horizontalPosition : "center", verticalPosition : "top", duration : 2000});
       } else {
-        
+        this._snackBar.open("Error: the user don't exist!", "", {horizontalPosition : "center", verticalPosition : "top", duration : 2000});
       }
     }
 
@@ -70,7 +70,7 @@ export class UserService {
       this.httpService.deleteUser(cf).subscribe({
         next:()=>{
           let users=this.users$.getValue();
-          users=users.filter((user)=>user.cf!==cf);
+          users=users.filter((user)=>user.cf.toUpperCase()!==cf.toUpperCase());
           this.users$.next(users);
         },
         error:(err)=>{console.log(err);}

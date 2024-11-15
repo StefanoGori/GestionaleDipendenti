@@ -29,6 +29,7 @@ import { DeleteDipendenteComponent } from './features/delete-dipendente/delete-d
     ModalNewUserComponent,
     DeleteDipendenteComponent,
     
+    
   ],
   imports: [
     BrowserModule,

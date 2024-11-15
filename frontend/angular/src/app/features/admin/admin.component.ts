@@ -80,12 +80,12 @@ export class AdminComponent {
     //   console.log(this.filteredDipendente);
     // }
 
-    searchDipendente(name:string, surname:string){
+    searchDipendente(inputname:string, inputsurname:string){
       this.isSearchPerformed = true;
       this.filteredDipendente = this.users$.pipe(
         map(users => users.filter((user)=>
-          user.name?.toLowerCase().includes(this.inputname.toLowerCase()) && 
-          user.surname?.toLowerCase().includes(this.inputsurname.toLowerCase())
+          user.name?.toLowerCase().includes(inputname.toLowerCase()) && 
+          user.surname?.toLowerCase().includes(inputsurname.toLowerCase())
       )));
     }
 

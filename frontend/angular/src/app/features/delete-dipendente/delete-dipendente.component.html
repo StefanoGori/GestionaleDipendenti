@@ -1,1 +1,10 @@
-<p>delete-dipendente works!</p>
+<div class="delete-modal">
+<h2 mat-dialog-title>Danger</h2>
+<mat-dialog-content>
+    <p>The user will be permanently deleted and cannot be recovered, do you want to continue?</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="goAction(false)">No Thanks</button>
+    <button mat-button (click)="goAction(true)" cdkFocusInitial>Go on</button>
+</mat-dialog-actions>
+</div>

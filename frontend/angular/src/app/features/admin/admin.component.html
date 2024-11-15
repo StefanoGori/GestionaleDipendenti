@@ -1,106 +1,116 @@
-<mat-tab-group>
-    <!-- Lista dei Dipendenti-->
-    <mat-tab label="Dipendenti" class="DipendentiList">
-        <div class="container">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-          
-            <!-- Cf Column -->
-            <ng-container matColumnDef="cf">
-              <th mat-header-cell *matHeaderCellDef> CF </th>
-              <td mat-cell *matCellDef="let Dipendenti"> {{Dipendenti.cf}} </td>
-            </ng-container>
-          
-            <!-- Name Column -->
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef> Name </th>
-              <td mat-cell *matCellDef="let Dipendenti"> {{Dipendenti.name}} </td>
-            </ng-container>
-          
-            <!-- Surname Column -->
-            <ng-container matColumnDef="surname">
-              <th mat-header-cell *matHeaderCellDef> Surname </th>
-              <td mat-cell *matCellDef="let Dipendenti"> {{Dipendenti.surname}} </td>
-            </ng-container>
-          
-            <!-- Daysoff Column -->
-            <ng-container matColumnDef="daysoff">
-              <th mat-header-cell *matHeaderCellDef> Daysoff </th>
-              <td mat-cell *matCellDef="let Dipendenti"> {{Dipendenti.daysoff}} </td>
-            </ng-container>
+<div class="container">
+  <mat-tab-group>
+      <!-- Lista dei Dipendenti-->
+      <mat-tab label="Dipendenti" class="DipendentiList">
+          <div class="container">
+          <table mat-table [dataSource]="(this.users$ | async) || [] " class="mat-elevation-z8">
             
-            <!--Permits Column-->
-            <ng-container matColumnDef="permits">
-                <th mat-header-cell *matHeaderCellDef> Permits</th>
-                <td mat-cell *matCellDef="let Dipendenti"> {{Dipendenti.permits}} </td>
-            </ng-container>
+              <!-- Cf Column -->
+              <ng-container matColumnDef="cf">
+                <th mat-header-cell *matHeaderCellDef> CF </th>
+                <td mat-cell *matCellDef="let Dipendenti"> {{Dipendenti.cf | uppercase}} </td>
+              </ng-container>
+            
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let Dipendenti"> {{Dipendenti.name}} </td>
+              </ng-container>
+            
+              <!-- Surname Column -->
+              <ng-container matColumnDef="surname">
+                <th mat-header-cell *matHeaderCellDef> Surname </th>
+                <td mat-cell *matCellDef="let Dipendenti"> {{Dipendenti.surname}} </td>
+              </ng-container>
+            
+              <!-- Daysoff Column -->
+              <ng-container matColumnDef="daysoff">
+                <th mat-header-cell *matHeaderCellDef> Daysoff </th>
+                <td mat-cell *matCellDef="let Dipendenti"> {{Dipendenti.daysoff}} </td>
+              </ng-container>
+              
+              <!--Permits Column-->
+              <ng-container matColumnDef="permits">
+                  <th mat-header-cell *matHeaderCellDef> Permits</th>
+                  <td mat-cell *matCellDef="let Dipendenti"> {{Dipendenti.permits}} </td>
+              </ng-container>
 
-            <!-- Edit Column -->
-             <ng-container matColumnDef="edit">
-              <th mat-header-cell *matHeaderCellDef> Edit </th>
-              <td mat-cell *matCellDef="let Dipendenti">
-                <button mat-fab (click)="openDeleteDipendente()">
-                  <mat-icon>delete</mat-icon>
-                </button>
-                <button mat-fab (click)="openEditDipendente()">
-                  <mat-icon>edit</mat-icon>
-                </button>
-              </td>
-             </ng-container>
+              <!-- Edit Column -->
+              <ng-container matColumnDef="edit">
+                <th mat-header-cell *matHeaderCellDef> Edit </th>
+                <td mat-cell *matCellDef="let Dipendenti">
+                  <button mini-fab (click)="DeleteDipendente(Dipendenti.cf)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                  <button mini-fab (click)="EditDipendente(Dipendenti)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
-          <mat-paginator length="dipendenti.length"
-              [pageSize]="pageSize"
-              [pageIndex]="pageIndex"
-              [pageSizeOptions]="pageSizeOptions"
-              (page)="onPageChange($event)"
-              aria-label="Select page"
-          >
-          </mat-paginator>
-          <button mat-fab extended (click)="openAddDipendente()">
-            <mat-icon>add</mat-icon>
-            Add Dipendente
-          </button>
-          
-        </div>
-    </mat-tab>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator length="dipendenti.length"
+                [pageSize]="pageSize"
+                [pageIndex]="pageIndex"
+                [pageSizeOptions]="pageSizeOptions"
+                (page)="onPageChange($event)"
+                aria-label="Select page"
+            >
+            </mat-paginator>
+            <button mat-fab extended (click)="AddDipendente()">
+              <mat-icon>add</mat-icon>
+              Add Dipendente
+            </button>
+            
+          </div>
+      </mat-tab>
 
-    <!--Orario dell'Admin-->
-    <mat-tab label="Il tuo Orario" class="AdminHours">
+      <!--Orario dell'Admin-->
+      <mat-tab label="Il tuo Orario" class="AdminHours">
 
-        <app-dipendente></app-dipendente>
+          <app-dipendente></app-dipendente>
 
-    </mat-tab>
+      </mat-tab>
 
-    <!--Orari di Tutti i Dipendenti-->
-    <mat-tab label="Orari Dipendenti" class="DipendentiHours">
+      <!--Orari di Tutti i Dipendenti-->
+      <mat-tab label="Orari Dipendenti" class="DipendentiHours">
 
-        <!--Input Nome-->
-        <mat-form-field class="example-full-width">
-            <mat-label>Nome</mat-label>
-            <input matInput placeholder="Mario" [(ngModel)]="name" (ngModelChange)="resetSearch()">
+        <!-- Prova singolo Input di ricerca -->
+        <!-- <form class="example-form" [formGroup]="formSearch" >
+          <mat-form-field class="example-full-width">
+            <mat-label>Barra di ricerca</mat-label>
+            <input matInput placeholder="Cerca Developer" [formControl] = "formSearch.controls.search">
           </mat-form-field>
-        <!--Input Cognome-->
-        <mat-form-field class="example-full-width">
-            <mat-label>Cognome</mat-label>
-            <input matInput placeholder="Rossi" [(ngModel)]="surname" (ngModelChange)="resetSearch()">
-          </mat-form-field>
+        </form> -->
 
-          <!--Ricerca Dipendente Button-->
-              <button mat-fab extended (click)="searchDipendente(this.name, this.surname)">
-                <mat-icon>search</mat-icon>
-                Search
-              </button>
+          <!--Input Nome-->
+          <mat-form-field class="example-full-width">
+              <mat-label>Nome</mat-label>
+              <input matInput placeholder="Mario" [(ngModel)]="inputname" (ngModelChange)="resetSearch()">
+            </mat-form-field>
+          <!--Input Cognome-->
+          <mat-form-field class="example-full-width">
+              <mat-label>Cognome</mat-label>
+              <input matInput placeholder="Rossi" [(ngModel)]="inputsurname" (ngModelChange)="resetSearch()">
+            </mat-form-field>
 
-        <!--Tabella Orario Dipendente-->
-        @if(isSearchPerformed){
-          @if(filteredDipendente.length!==0){
-            <app-dipendente></app-dipendente>
-          }
-          @else {
-            <p>utente non trovato</p>
-          }
-        } 
-    </mat-tab>
-</mat-tab-group>
+            <!--Ricerca Dipendente Button-->
+            <button mat-fab extended (click)="searchDipendente(this.inputname, this.inputsurname)">
+            <mat-icon>search</mat-icon>
+              Search
+            </button>
+
+          <!--Tabella Orario Dipendente-->
+          @if(isSearchPerformed){
+            @if(filteredDipendente.length!==0){
+              <app-dipendente></app-dipendente>
+            }
+            @else {
+              <p>utente non trovato</p>
+            }
+          } 
+      </mat-tab>
+  </mat-tab-group>
+</div>

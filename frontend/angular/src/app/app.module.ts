@@ -13,9 +13,7 @@ import { DipendenteComponent } from './features/dipendente/dipendente.component'
 import { HolidaysComponent } from './features/holidays/holidays.component';
 import { PermitsComponent } from './features/permits/permits.component';
 import { AdminComponent } from './features/admin/admin.component';
-import { HttpClient } from '@angular/common/http';
-import { AddDipendenteComponent } from './features/add-dipendente/add-dipendente.component';
-import { EditDipendenteComponent } from './features/edit-dipendente/edit-dipendente.component';
+import { ModalNewUserComponent } from './features/modal-new-user/modal-new-user.component';
 import { DeleteDipendenteComponent } from './features/delete-dipendente/delete-dipendente.component';
 
 
@@ -28,8 +26,7 @@ import { DeleteDipendenteComponent } from './features/delete-dipendente/delete-d
     HolidaysComponent,
     PermitsComponent,
     AdminComponent,
-    AddDipendenteComponent,
-    EditDipendenteComponent,
+    ModalNewUserComponent,
     DeleteDipendenteComponent,
     
   ],

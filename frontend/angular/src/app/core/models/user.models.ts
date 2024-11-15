@@ -5,5 +5,5 @@ export interface User{
     admin: boolean,
     holidays: number,
     permits: number,
-    pwd: string,
+    password: string,
 }

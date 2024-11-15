@@ -13,6 +13,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTableModule} from '@angular/material/table';
 import {MatCardModule} from '@angular/material/card';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatDialogActions, MatDialogContent } from '@angular/material/dialog';
+
 
 
 
@@ -33,7 +35,9 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatGridListModule,
     MatTableModule,
     MatCardModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatDialogContent,
+    MatDialogActions
   ],
   exports: [
     MatToolbarModule,
@@ -48,7 +52,9 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatGridListModule,
     MatTableModule,
     MatCardModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatDialogContent,
+    MatDialogActions
   ],
 })
 export class MaterialModule { }

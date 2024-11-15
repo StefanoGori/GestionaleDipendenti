@@ -20,7 +20,7 @@ import com.gestionale.services.TimetablesService;
 
 @RestController
 @RequestMapping("management/timetables")
-@CrossOrigin(origins="*", allowedHeaders = "*")
+//@CrossOrigin(origins="*", allowedHeaders = "*")
 public class TimetableController {
 	
 	private final TimetablesService timeService;

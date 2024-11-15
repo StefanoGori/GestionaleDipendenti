@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,13 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gestionale.dto.GenericResponseDto;
 import com.gestionale.dto.UserDto;
 import com.gestionale.entities.User;
 import com.gestionale.services.UsersService;
 
 @RestController
 @RequestMapping("management/employees")
-@CrossOrigin(origins="*", allowedHeaders = "*")
+//@CrossOrigin(origins="*", allowedHeaders = "*")
 public class UsersController {
 
 	private final UsersService usersService;
@@ -45,14 +47,13 @@ public class UsersController {
     	} 
     }
     
-    @PostMapping("add")
-    public ResponseEntity<String> createUser(@RequestBody User user) throws Exception {
+    @PostMapping(path="add", produces= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<GenericResponseDto> createUser(@RequestBody User user) throws Exception {
     	try {
     		String msg = usersService.createUser(user);
-    		return new ResponseEntity<>(msg, HttpStatus.OK);
-    		
+    		return ResponseEntity.ok(new GenericResponseDto(msg)); 		
     	} catch (Exception e){
-    		return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT); 
+    		return new ResponseEntity<GenericResponseDto>(new GenericResponseDto(e.getMessage()), HttpStatus.CONFLICT); 
     	} 
     }
     

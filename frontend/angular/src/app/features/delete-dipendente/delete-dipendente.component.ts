@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-delete-dipendente',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrl: './delete-dipendente.component.css'
 })
 export class DeleteDipendenteComponent {
+  dialogRef= inject(MatDialogRef);
+  check : boolean = true;
 
+  goAction(newstate : boolean){
+    this.check = newstate;
+    this.dialogRef.close(this.check);
+  }
 }

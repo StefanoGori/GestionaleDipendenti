@@ -1,11 +1,21 @@
-mat-tab-group{
+.mat-tab-group{
     padding-top: 1%;
+    
 }
+
+.mat-mdc-tab-labels {
+    background-color: #1abab1;
+}
+
 table{
     padding-top: 1%;
 }
 
 .container{
-
+    padding: 10px;
     align-items: center;
+}
+
+button{
+    
 }

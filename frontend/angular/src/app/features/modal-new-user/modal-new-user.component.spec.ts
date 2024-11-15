@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditDipendenteComponent } from './edit-dipendente.component';
+import { ModalNewUserComponent } from './modal-new-user.component';
 
-describe('EditDipendenteComponent', () => {
-  let component: EditDipendenteComponent;
-  let fixture: ComponentFixture<EditDipendenteComponent>;
+describe('ModalNewUserComponent', () => {
+  let component: ModalNewUserComponent;
+  let fixture: ComponentFixture<ModalNewUserComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EditDipendenteComponent]
+      declarations: [ModalNewUserComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EditDipendenteComponent);
+    fixture = TestBed.createComponent(ModalNewUserComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

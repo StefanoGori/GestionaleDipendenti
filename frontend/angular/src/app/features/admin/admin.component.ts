@@ -33,7 +33,7 @@ export class AdminComponent {
     displayedColumns: string[] = ['cf', 'name', 'surname', 'daysoff', 'permits', 'edit'];
 
     //Paginator
-    pageSize=10;
+    pageSize=8;
     pageIndex=0;
     pageSizeOptions=[5,10,25,100];
 
@@ -140,7 +140,8 @@ export class AdminComponent {
             height: 'auto',
             data: value
           }).afterClosed().subscribe({
-            next: (result) => result ? this.timeTableService.addTimeTable(result, value) : null,
+            next: (result) => result ? 
+            this.timeTableService.addTimeTable(result, value) : null,
           });
 
         }

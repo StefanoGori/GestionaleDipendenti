@@ -23,7 +23,6 @@ import com.gestionale.services.UsersService;
 
 @RestController
 @RequestMapping("management/employees")
-//@CrossOrigin(origins="*", allowedHeaders = "*")
 public class UsersController {
 
 	private final UsersService usersService;
@@ -47,6 +46,7 @@ public class UsersController {
     	} 
     }
     
+    // lato server riceveva un errore 200 , sistemato così con Andrea
     @PostMapping(path="add", produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<GenericResponseDto> createUser(@RequestBody User user) throws Exception {
     	try {

@@ -58,8 +58,6 @@ export class TimeTableService {
     }
 
     addTimeTable(timetable : TimeTable, user : User){
-        console.log(timetable)
-        console.log(user)
     this.httpService.addTimeTable(user.cf, timetable).subscribe({
             next: ()=>{
                 let timeTables = this.timeTables$.getValue();

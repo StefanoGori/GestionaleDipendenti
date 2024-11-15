@@ -44,7 +44,7 @@ export class DipendenteComponent implements AfterViewInit, OnChanges{
 
   ngOnInit(){
    this.timeTableService.getTimeTableByUserCf(this.cf).pipe(switchMap((value) => {
-     return value;
+      return value;
    })).subscribe({
     next: (value)=>{
       this.dataSource.data=[value];

@@ -22,15 +22,15 @@ import com.gestionale.repositories.UsersRepository;
 
 
 @Service
-//public class UsersService implements UserDetailsService {
-public class UsersService {
+// implements UserDetailsService {
+public class UsersService  implements UserDetailsService{
 	
 	private final UsersRepository usersRepository;
-//	private final UserMapper usersMapper;
+	private final UserMapper usersMapper;
 	
-	public UsersService (UsersRepository usersRepository) {
+	public UsersService (UsersRepository usersRepository, UserMapper usersMapper) {
 		this.usersRepository = usersRepository;
-//		this.usersMapper = usersMapper;
+		this.usersMapper = usersMapper;
 	}
 	
 	// CRUD Operation
@@ -52,14 +52,14 @@ public class UsersService {
 	}
 	
 	// metodo per Spring security di recupearare l'username (per noi sarà il codice fiscale, nello UserDto è username per questo motivo)
-//	@Override
-//	@Transactional(readOnly=true)
-//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//		return usersRepository.findByCf(username)
-//				.map(usersMapper::toUserDto)
-//				.orElseThrow(()-> new UsernameNotFoundException("User not found:" + username));
-//	}
-//	
+	@Override
+	@Transactional(readOnly=true)
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		return usersRepository.findByCf(username)
+				.map(usersMapper::toUserDto)
+				.orElseThrow(()-> new UsernameNotFoundException("User not found:" + username));
+	}
+	
 	// create
 	
 	@Transactional(readOnly = false)
@@ -104,10 +104,4 @@ public class UsersService {
 			return msg;
 		}
 	}
-
-
-	
-	
-	
-
 }

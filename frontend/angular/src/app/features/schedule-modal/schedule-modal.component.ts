@@ -16,6 +16,7 @@ export class ScheduleModalComponent {
   timeService = inject(TimeTableService);
 
   formModalSchedule= new FormGroup({
+    id : new FormControl(crypto.randomUUID()),
     day : new FormControl("", [Validators.required]),
     entrance : new FormControl("", [Validators.required]),
     leaving : new FormControl("", [Validators.required]),

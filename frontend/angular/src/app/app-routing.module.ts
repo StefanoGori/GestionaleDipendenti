@@ -7,6 +7,7 @@ import { DipendenteComponent } from './features/dipendente/dipendente.component'
 const routes: Routes = [
   {path: '', pathMatch: 'full', component: LoginComponent},
   {path: 'admin', component: AdminComponent},
+  {path: 'user', component: DipendenteComponent},
 ];
 
 @NgModule({

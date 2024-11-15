@@ -14,13 +14,16 @@ export class TimeTableService {
     httpService: HttpService = inject(HttpService);
 
     constructor() {
+        console.log("costruttore")
         this.httpService.getAllTimeTables()
         .pipe(
             map(timeTables=>timeTables.map(timeTable=>{
                 return{...timeTable}
             }))
         ).subscribe({
-            next: (value)=>{this.timeTables$.next(value)}
+            next: (value)=>{this.timeTables$.next(value)
+                console.log(value)
+            }
         });
     }
 
@@ -162,7 +165,7 @@ export class TimeTableService {
         timeTables[timeTableIndex].holiday = newHoliday;
         this.httpService.editTimeTable(timeTables[timeTableIndex]).subscribe({
             next: ()=>{
-                this.timeTables$.next(timeTables);
+                this.timeTables$.next([...timeTables]);
             },
             error: (error)=>{
                 console.log(error);
